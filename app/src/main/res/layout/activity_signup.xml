@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/background_light"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:text="@string/sign_up"
+            android:textColor="#808080"
+            android:textSize="25sp"
+            android:id="@+id/textView" />
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="30dp"
+            android:layout_below="@id/textView"
+            android:layout_centerHorizontal="true"
+            android:padding="5dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@drawable/rounded_edittext"
+            android:hint="First Name"/>
+
+        <EditText
+            android:id="@+id/lastname"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/name"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:padding="5dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@drawable/rounded_edittext"
+            android:hint="Last Name"/>
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="40dp"
+            android:layout_below="@id/lastname"
+            android:layout_marginEnd="40dp"
+            android:layout_centerHorizontal="true"
+            android:padding="5dp"
+            android:background="@drawable/rounded_edittext"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"/>
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="30dp"
+            android:layout_below="@id/email"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_centerHorizontal="true"
+            android:padding="5dp"
+            android:background="@drawable/rounded_edittext"
+            android:hint="@string/password"
+            android:inputType="textPassword"/>
+
+        <Button
+            android:id="@+id/submitbutton"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_below="@id/password"
+            android:background="@drawable/roundedbutton"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:paddingStart="2dp"
+            android:paddingTop="2dp"
+            android:text="@string/submit"
+            android:textColor="@android:color/background_light"
+            android:textSize="20sp"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:onClick="OnReg"
+            />
+
+        <TextView
+            android:layout_width="160dp"
+            android:layout_height="1dp"
+            android:layout_below="@+id/submitbutton"
+            android:layout_marginTop="60dp"
+            android:background="#a9a9a9"
+            android:foreground="#a9a9a9"
+            android:layout_marginStart="5dp"
+            android:layout_alignParentLeft="true"/>
+
+        <TextView
+            android:layout_width="160dp"
+            android:id="@+id/divider"
+            android:layout_height="1dp"
+            android:layout_below="@+id/submitbutton"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="5dp"
+            android:layout_alignParentRight="true"
+            android:background="#a9a9a9"
+            android:foreground="#a9a9a9"
+             />
+
+        <TextView
+            android:id="@+id/or"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/or"
+            android:layout_below="@id/submitbutton"
+            android:layout_marginTop="52dp"
+            android:layout_centerHorizontal="true"
+            />
+
+        <Button
+            android:id="@+id/rinesignin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_below="@+id/or"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/roundedbutton"
+            android:text="Sign in with Rine"
+            android:textColor="@color/cardview_light_background"
+            android:textAllCaps="false"
+            android:textSize="17sp"
+            android:onClick="signin"/>
+
+        <!--<Button
+            android:id="@+id/facebook"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@drawable/facebookbutton"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/rinesignin"
+            android:layout_marginTop="20dp"
+            android:text="@string/signupface"
+            android:textColor="@android:color/background_light"
+            android:drawableStart="@drawable/facebook"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:textSize="17sp"
+            android:textAllCaps="false"/>-->
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/facebook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:scaleY="1.5"
+            android:layout_below="@id/rinesignin"
+            android:layout_marginTop="20dp"
+            />
+
+
+        <!--<Button
+            android:id="@+id/twitter"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_below="@id/facebook"
+            android:background="@drawable/twitterbutton"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="@string/signuptwit"
+            android:textColor="@android:color/background_light"
+            android:drawableStart="@drawable/twitter"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:textSize="17sp"
+            android:textAllCaps="false" />-->
+
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/googlesign_in_button"
+            android:layout_width="match_parent"
+            android:layout_marginEnd="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_below="@id/facebook"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/googlesign_in_button"
+            android:layout_marginTop="20dp"
+            />
+
+
+    </RelativeLayout>
+</ScrollView>
+

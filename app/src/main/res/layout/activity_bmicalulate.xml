@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navi"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@android:color/background_light"
+        app:itemTextColor="@color/colorPrimaryDark"
+        app:menu="@menu/drawablemenu"
+        android:layout_gravity="end"
+        app:headerLayout="@layout/header"
+        app:itemIconTint="#28b180">
+
+    </android.support.design.widget.NavigationView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rine_background"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/linear">
+
+            <Button
+                android:id="@+id/back"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/back"
+                android:contentDescription="@string/todo"
+                android:onClick="back"/>
+
+            <TextView
+                android:id="@+id/imagerine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="45dp"
+                android:layout_marginTop="11dp"
+                android:text="@string/bmical"
+                android:textColor="@android:color/background_light"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-smallcaps"
+                android:contentDescription="@string/todo" />
+
+            <Button
+                android:id="@+id/store"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="80dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/storeicon1" />
+
+            <Button
+                android:id="@+id/hamburger"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/ham"
+                android:layout_marginTop="8dp"
+                android:onClick="drawerclick"/>
+
+        </RelativeLayout>
+
+
+
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linear">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_view"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="30dp"
+                    app:cardCornerRadius="5dp">
+
+                    <RelativeLayout
+                        android:id="@+id/cardlayout1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.github.anastr.speedviewlib.SpeedView
+                            android:id="@+id/speedView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="20dp"
+                            app:sv_lowSpeedColor="#1E88E5"
+                            app:sv_mediumSpeedColor="#28b180"
+                            app:sv_startDegree="180"
+                            app:sv_endDegree="360"
+                            app:sv_lowSpeedPercent="25"
+                            app:sv_highSpeedColor="@color/highspeed"
+                            app:sv_mediumSpeedPercent="50"
+                            app:sv_textColor="@color/colorPrimaryDark"
+                            app:sv_tickNumber="5"
+                            app:sv_minSpeed="14"
+                            app:sv_maxSpeed="40"
+                            app:sv_unit="  Kg/m2"
+                            app:sv_trembleDegree="0"
+                            app:sv_trembleDuration="0"
+                            app:sv_withTremble="false"
+                            app:sv_unitTextColor="#28b180"
+                            app:sv_speedTextColor="#28b180"
+                            app:sv_speedTextSize="25sp"
+                            app:sv_speedTextPadding="50dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/separator01"
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_below="@id/speedView"
+                            android:background="#d3d3d3"
+                            android:layout_centerHorizontal="true"
+
+                            />
+
+                        <TextView
+                            android:id="@+id/weight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/separator01"
+                            android:layout_centerHorizontal="true"
+                            android:text="0Y  |  0 Kg  |  0'0"
+                            android:layout_marginTop="5dp"/>
+                        <TextView
+                            android:id="@+id/separator02"
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_below="@id/weight"
+                            android:background="#d3d3d3"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="5dp"
+
+                            />
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:layout_below="@id/separator02"/>
+
+
+                    </RelativeLayout>
+
+
+                </android.support.v7.widget.CardView>
+            </RelativeLayout>
+        </ScrollView>
+
+
+
+    </RelativeLayout>
+</android.support.v4.widget.DrawerLayout>

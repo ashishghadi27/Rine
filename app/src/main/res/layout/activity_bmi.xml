@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navi"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@android:color/background_light"
+        app:itemTextColor="@color/colorPrimaryDark"
+        app:menu="@menu/drawablemenu"
+        android:layout_gravity="end"
+        app:headerLayout="@layout/header"
+        app:itemIconTint="#28b180">
+
+    </android.support.design.widget.NavigationView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rine_background"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/linear">
+
+            <Button
+                android:id="@+id/back"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/back"
+                android:contentDescription="@string/todo"
+                android:onClick="back"/>
+
+            <TextView
+                android:id="@+id/imagerine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="45dp"
+                android:layout_marginTop="11dp"
+                android:text="@string/bmical"
+                android:textColor="@android:color/background_light"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-smallcaps"
+                android:contentDescription="@string/todo" />
+
+            <Button
+                android:id="@+id/store"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="80dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/storeicon1" />
+
+            <Button
+                android:id="@+id/hamburger"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/ham"
+                android:layout_marginTop="8dp"
+                android:onClick="drawerclick"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/ageholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linear"
+            android:layout_centerHorizontal="true">
+            <TextView
+                android:id="@+id/enterage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enter your age"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="12dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="30dp"
+                />
+
+            <EditText
+                android:id="@+id/edittextage"
+                android:layout_width="130dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/enterage"
+                android:textColor="@color/cardview_light_background"
+                android:backgroundTint="#ffffff"
+                android:layout_marginStart="0dp"
+                android:textAlignment="center"
+                android:textSize="25sp"/>
+
+
+
+            <Button
+                android:id="@+id/Male"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/malewhite"
+                android:layout_toEndOf="@+id/edittextage"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="60dp"
+                />
+
+            <TextView
+                android:id="@+id/entergender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select your sex"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="12dp"
+                android:layout_toEndOf="@id/enterage"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="30dp"
+                />
+
+            <TextView
+                android:id="@+id/separator"
+                android:layout_toEndOf="@+id/Male"
+                android:layout_width="1dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="60dp"
+                android:background="@color/cardview_light_background"
+                android:layout_marginStart="20dp"/>
+
+            <Button
+                android:id="@+id/Female"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/female"
+                android:layout_toEndOf="@+id/separator"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="60dp"
+                />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/enterweight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ageholder"
+            android:text="Enter your weight"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="12dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="30dp"
+            />
+
+        <EditText
+            android:id="@+id/edittextweight"
+            android:layout_width="130dp"
+            android:layout_height="70dp"
+            android:layout_below="@id/enterweight"
+            android:textColor="@color/cardview_light_background"
+            android:backgroundTint="#ffffff"
+            android:layout_marginStart="0dp"
+            android:layout_centerHorizontal="true"
+            android:hint="Kg"
+            android:gravity="end"
+            android:paddingRight="15dp"
+            android:textColorHint="@color/cardview_light_background"
+            android:textSize="25sp"/>
+
+        <RelativeLayout
+            android:id="@+id/heightholder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edittextweight"
+            android:layout_centerHorizontal="true">
+            <TextView
+                android:id="@+id/height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Enter your height"
+                android:textColor="@color/cardview_light_background"
+                android:layout_marginTop="30dp"
+                />
+
+            <Space
+                android:id="@+id/spacer"
+                android:layout_width="1dp"
+                android:layout_height="80dp"
+                android:layout_below="@id/height"
+                android:layout_centerHorizontal="true"/>
+
+            <EditText
+                android:id="@+id/foot"
+                android:layout_width="130dp"
+                android:layout_height="70dp"
+                android:backgroundTint="@color/cardview_light_background"
+                android:textSize="25sp"
+                android:textColor="@color/cardview_light_background"
+                android:padding="15dp"
+                android:layout_below="@id/height"
+                android:layout_toStartOf="@id/spacer"
+                android:layout_marginEnd="25dp"
+                android:layout_marginTop="20dp"
+                android:hint="ft"
+                android:textColorHint="@color/cardview_light_background"
+                android:gravity="end"
+
+                />
+
+            <EditText
+                android:id="@+id/inch"
+                android:layout_width="130dp"
+                android:layout_height="70dp"
+                android:backgroundTint="@color/cardview_light_background"
+                android:textSize="25sp"
+                android:textColor="@color/cardview_light_background"
+                android:padding="15dp"
+                android:layout_below="@id/height"
+                android:layout_marginTop="20dp"
+                android:layout_toEndOf="@id/spacer"
+                android:layout_marginStart="25dp"
+                android:hint="in"
+                android:textColorHint="@color/cardview_light_background"
+                android:gravity="end"
+                />
+
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/submitdata"
+            android:layout_width="130dp"
+            android:layout_height="30dp"
+            android:text="SUBMIT"
+            android:layout_below="@id/heightholder"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80dp"
+            android:textColor="#28b180"
+            android:background="@drawable/bmibackground"
+
+            />
+
+
+    </RelativeLayout>
+</android.support.v4.widget.DrawerLayout>
+

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/Products" android:title="Products" android:icon="@drawable/naviproducts"  />
+    <item android:id="@+id/plans" android:title="Plans" android:icon="@drawable/naviplans"/>
+    <item android:id="@+id/profile" android:title="My Profile" android:icon="@drawable/naviprofile"/>
+    <item android:id="@+id/Noti" android:title="Notifications" android:icon="@drawable/navinoti"/>
+    <item android:id="@+id/cart" android:title="My Cart" android:icon="@drawable/navicart"/>
+    <item android:id="@+id/Calendar" android:title="Calendar" android:icon="@drawable/navicalendar"/>
+    <item android:id="@+id/logout" android:title="Logout" android:icon="@drawable/navilogout"/>
+    <item android:id="@+id/settings" android:title="Settings" android:icon="@drawable/navisettings"/>
+</menu>
