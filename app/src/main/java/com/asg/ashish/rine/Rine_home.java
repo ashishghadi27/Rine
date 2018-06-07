@@ -1,12 +1,13 @@
 package com.asg.ashish.rine;
 
-import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 
 public class Rine_home extends AppCompatActivity {
@@ -19,10 +20,52 @@ public class Rine_home extends AppCompatActivity {
         setContentView(R.layout.activity_rine_home);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.navi);
 
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.bringToFront();
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                item.setChecked(true);
+                switch (item.getItemId()) {
+                    // Respond to the action bar's Up/Home button
+                    case R.id.navProducts:
+                        Intent a = new Intent(Rine_home.this, Products_Activity.class);
+                        startActivity(a);
+                        item.setChecked(false);
+                        mDrawerLayout.closeDrawer(Gravity.END);
+                        return true;
+
+                    case R.id.navcart:
+                        Intent x = new Intent(Rine_home.this, Cart_Activity.class);
+                        startActivity(x);
+                        mDrawerLayout.closeDrawer(Gravity.END);
+                        return true;
+
+                    case R.id.profile:
+                        Intent p = new Intent(Rine_home.this, User_dash.class);
+                        startActivity(p);
+                        mDrawerLayout.closeDrawer(Gravity.END);
+                        return true;
+
+
+
+                }
+                return false;
+            }
+        });
+
+
+
+
+
+
+
     }
 
+
+
     public void drawerclick(View view){
-        mDrawerLayout.openDrawer(Gravity.RIGHT);
+        mDrawerLayout.openDrawer(Gravity.END);
 
     }
 
@@ -51,6 +94,7 @@ public class Rine_home extends AppCompatActivity {
         Intent i = new Intent(this, Cart_Activity.class);
         startActivity(i);
     }
+
 
     public void back(View view){
         this.onBackPressed();

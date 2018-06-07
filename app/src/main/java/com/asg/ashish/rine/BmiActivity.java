@@ -1,6 +1,7 @@
 package com.asg.ashish.rine;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -18,10 +19,13 @@ public class BmiActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private EditText age, foot, inch, weigh;
     int malecount = 1, femalecount = 0;
+    String gender;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bmi);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.navi);
@@ -47,6 +51,19 @@ public class BmiActivity extends AppCompatActivity {
                     i.putExtra("inch", in);
                     i.putExtra("weight", kg);
                     startActivity(i);
+                    sharedPreferences = getSharedPreferences("profile", MODE_PRIVATE);
+                    editor = sharedPreferences.edit();
+                    editor.putString("age", Age);
+                    editor.putString("height", feet+"' "+in+'"');
+                    editor.putString("weight", kg);
+                    if(malecount == 1)
+                        gender = "Male";
+                    else
+                        gender = "Female";
+                    editor.putString("gender", gender);
+                    editor.apply();
+
+
                 }
                 else{
                     Toast.makeText(BmiActivity.this,"Enter Complete Information", Toast.LENGTH_SHORT).show();

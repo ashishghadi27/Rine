@@ -2,11 +2,13 @@ package com.asg.ashish.rine;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -42,7 +44,7 @@ public class blueberry extends AppCompatActivity {
     TextView counter1, titletext, info1, info4;
     ImageView img;
     int count1=1;
-    String Cartdata;
+    String Cartdata = "";
     private List<Cart_list> listItems;
     SharedPreferences sharedPreferences;
     String productid, texttitle, link, TAG = "CHECK:", jsonur = "https://www.rinebars.com/wp-json/wp/v2/product/", info, para;
@@ -72,7 +74,15 @@ public class blueberry extends AppCompatActivity {
         listItems = new ArrayList<>();
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
+        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
+        progressDialog.setCancelable(true);
+        progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                onBackPressed();
+            }
+        });
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, jsonur,
                 new Response.Listener<String>() {
                     @Override
@@ -155,18 +165,34 @@ public class blueberry extends AppCompatActivity {
 
     public void add_to_cart(View view){
 
-       Cart_list item = new Cart_list(texttitle, productid, link, (String) counter1.getText());
-       listItems.add(item);
-       String json = new Gson().toJson(listItems);
-       Cartdata = Cartdata + json;
-       sharedPreferences = getSharedPreferences("cart", MODE_PRIVATE);
-       SharedPreferences.Editor editor = sharedPreferences.edit();
-       editor.putString("cartdata", Cartdata);
-       editor.apply();
+        Cart_list item = new Cart_list(texttitle, productid, link, (String) counter1.getText(), "some");
+        listItems.add(item);
+        String json = new Gson().toJson(listItems);
+        Cartdata = Cartdata + json;
+        sharedPreferences = getSharedPreferences("cart", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("cartdata", Cartdata);
+        editor.apply();
 
 
         Toast.makeText(blueberry.this, Cartdata, Toast.LENGTH_SHORT ).show();
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Cartdata = "";
+        sharedPreferences = getSharedPreferences("cart", MODE_PRIVATE);
+        Cartdata = sharedPreferences.getString("cartdata", "");
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        Cartdata = "";
+        sharedPreferences = getSharedPreferences("cart", MODE_PRIVATE);
+        Cartdata = sharedPreferences.getString("cartdata", "");
     }
 }

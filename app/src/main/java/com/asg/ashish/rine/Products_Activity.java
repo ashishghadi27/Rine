@@ -2,6 +2,7 @@ package com.asg.ashish.rine;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -33,7 +34,7 @@ import java.util.List;
 
 public class Products_Activity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
-    String jsonurl = "https://rinebars.com/wp-json/wp/v2/product";
+    String jsonurl = "https://rinebars.com/wp-json/wp/v2/product?per_page=30";
     private RecyclerView recyclerView;
     private List<Products_list> listItems;
     private Products_adapter adapter;
@@ -79,8 +80,17 @@ public class Products_Activity extends AppCompatActivity {
 
     private void loadRecyclerViewData() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
+        //progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("Loading...");
         progressDialog.show();
+        progressDialog.setCancelable(true);
+        progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                onBackPressed();
+            }
+        });
 
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, jsonurl,
                 new Response.Listener<String>() {
@@ -122,6 +132,7 @@ public class Products_Activity extends AppCompatActivity {
 
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
+                                                Log.v("IMAGE CHECKER OUTSIDE", "Image exception");
                                             }
 
                                         }
@@ -177,6 +188,12 @@ public class Products_Activity extends AppCompatActivity {
 
     public void back(View view){
         this.onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
     }
 
     private boolean isNetworkAvailable() {

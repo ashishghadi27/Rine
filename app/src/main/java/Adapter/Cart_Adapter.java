@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,7 @@ public class Cart_Adapter extends RecyclerView.Adapter<Cart_Adapter.MyViewHolder
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, countertext, lh, count;
+        public TextView title, countertext, lh, count, index;
         public ImageView imgbutton;
 
         public MyViewHolder(View view) {
@@ -48,6 +49,7 @@ public class Cart_Adapter extends RecyclerView.Adapter<Cart_Adapter.MyViewHolder
             imgbutton = (ImageView) view.findViewById(R.id.blueberry);
             lh = (TextView) view.findViewById(R.id.linkholder);
             count = (TextView)view.findViewById(R.id.count);
+            index = (TextView)view.findViewById(R.id.index);
 
         }
 
@@ -95,6 +97,9 @@ public class Cart_Adapter extends RecyclerView.Adapter<Cart_Adapter.MyViewHolder
         holder.lh.setText(list.getImg());
         Glide.with(context).load(list.getImg()).override(1000,500).into(holder.imgbutton);
         holder.count.setText(list.getCount());
+        holder.index.setText(list.getIndex());
+        Log.v("ID IN ADAPTER IS",list.getId());
+        Log.v("INDEX IN ADAPTER IS",list.getIndex());
 
     }
 

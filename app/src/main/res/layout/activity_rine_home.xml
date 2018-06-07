@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navi"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
     
     <android.support.design.widget.NavigationView
         android:layout_width="wrap_content"
@@ -14,7 +15,9 @@
         app:menu="@menu/drawablemenu"
         android:layout_gravity="end"
         app:headerLayout="@layout/header"
-        app:itemIconTint="#28b180">
+        android:id="@+id/nav_view"
+        app:itemIconTint="#28b180"
+        android:fitsSystemWindows="true">
 
     </android.support.design.widget.NavigationView>
     <RelativeLayout
@@ -77,10 +80,10 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="0dp"
                     android:onClick="loadProducts"
-                    android:text="@string/products"
+                    android:text="P r o d u c t s"
                     android:textColor="@android:color/background_light"
-                    android:textSize="30sp"
-                    android:fontFamily="sans-serif-smallcaps"
+                    android:textSize="25sp"
+                    android:fontFamily="@font/montserrat"
                     android:background="@drawable/strawberry"
 
                     />
@@ -97,8 +100,8 @@
                     android:background="@drawable/subscription"
                     android:text="@string/subscription"
                     android:textColor="@android:color/background_light"
-                    android:textSize="30sp"
-                    android:fontFamily="sans-serif-smallcaps"/>
+                    android:textSize="24sp"
+                    android:fontFamily="@font/montserrat"/>
 
 
                 <Button
