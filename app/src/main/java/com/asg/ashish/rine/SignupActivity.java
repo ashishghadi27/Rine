@@ -3,6 +3,7 @@ package com.asg.ashish.rine;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -19,6 +20,10 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.Profile;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
@@ -36,6 +41,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -60,6 +71,8 @@ public class SignupActivity extends AppCompatActivity {
         password = (EditText)findViewById(R.id.password);
         google = (SignInButton)findViewById(R.id.googlesign_in_button);
         facebook = (LoginButton)findViewById(R.id.facebook);
+        facebook.setReadPermissions(Arrays.asList("public_profile", ""));
+
         if (isNetworkAvailable()){
             check = (AccessToken.getCurrentAccessToken() == null);
             if(check){
@@ -70,9 +83,38 @@ public class SignupActivity extends AppCompatActivity {
                         new FacebookCallback<LoginResult>() {
                             @Override
                             public void onSuccess(LoginResult loginResult) {
+                                final Bundle params = new Bundle();
+                                params.putString("fields", "name,email,gender,picture.type(large)");
+                                new GraphRequest(AccessToken.getCurrentAccessToken(), "me", params, HttpMethod.GET,
+                                        new GraphRequest.Callback() {
+                                            @Override
+                                            public void onCompleted(GraphResponse response) {
+                                                if (response != null) {
+                                                    try {
+                                                        JSONObject data = response.getJSONObject();
+                                                        if (data.has("picture")) {
+                                                            String profilePicUrl = data.getJSONObject("picture").getJSONObject("data").getString("url");
+                                                            String name = data.getString("name");
+                                                            //Toast.makeText(SignupActivity.this,name,Toast.LENGTH_LONG).show();
+                                                            //Log.v("FBURL: ",profilePicUrl);
+                                                            SharedPreferences preferences = getSharedPreferences("profile", MODE_PRIVATE);
+                                                            SharedPreferences.Editor editor = preferences.edit();
+                                                            editor.putString("name", name);
+                                                            editor.putString("profilepic", profilePicUrl);
+                                                            editor.apply();
+
+                                                        }
+                                                    } catch (Exception e) {
+                                                        e.printStackTrace();
+                                                        Toast.makeText(SignupActivity.this,"EXCEPTION",Toast.LENGTH_LONG).show();
+                                                    }
+                                                }
+                                            }
+                                        }).executeAsync();
                                 Intent i = new Intent(SignupActivity.this, Rine_home.class);
                                 startActivity(i);
                                 finish();
+
                             }
 
                             @Override
