@@ -27,7 +27,7 @@ public class Rine_home extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 item.setChecked(true);
                 switch (item.getItemId()) {
-                    // Respond to the action bar's Up/Home button
+               
                     case R.id.navProducts:
                         Intent a = new Intent(Rine_home.this, Products_Activity.class);
                         startActivity(a);
