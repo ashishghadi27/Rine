@@ -41,7 +41,7 @@
                 android:layout_alignParentEnd="true"
                 android:textSize="18sp"
                 android:textColor="#ffffff"
-                android:onClick="remove"
+                android:id="@+id/remove"
                 />
 
             <Button

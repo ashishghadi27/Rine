@@ -5,16 +5,20 @@ public class Cart_list {
     private String id;
     private String img;
     private String count;
-    private String index;
+
+
+    public Cart_list() {
 
 
 
-    public Cart_list(String title, String id, String img, String count, String index) {
+    }
+
+    public Cart_list( String id,String title, String img, String count) {
         this.title = title;
         this.id = id;
         this.img = img;
         this.count = count;
-        this.index = index;
+
 
     }
 
@@ -34,8 +38,20 @@ public class Cart_list {
         return count;
     }
 
-    public String getIndex() {
-        return index;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
     }
 }
 

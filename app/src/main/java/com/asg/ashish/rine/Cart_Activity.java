@@ -2,6 +2,8 @@ package com.asg.ashish.rine;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -23,7 +25,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapter.Cart_Adapter;
+import Database.DBHandler;
 import Model.Cart_list;
+
+import static Database.DBHandler.TABLE_NAME;
 
 public class Cart_Activity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
@@ -32,6 +37,8 @@ public class Cart_Activity extends AppCompatActivity {
     private Cart_Adapter adapter;
     String TAG = "Check ADAPTER", id, data="";
     SwipeRefreshLayout mSwipeRefresh;
+    int count = 0;
+    DBHandler dbHandler;
 
 
     @Override
@@ -43,7 +50,7 @@ public class Cart_Activity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mSwipeRefresh = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshLayout);
         listItems = new ArrayList<>();
-
+        dbHandler = new DBHandler(this, null, null, 2);
         loader();
         mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -59,34 +66,65 @@ public class Cart_Activity extends AppCompatActivity {
 
     public void loader(){
 
-        SharedPreferences sp = getSharedPreferences("cart", MODE_PRIVATE);
+        /*SharedPreferences sp = getSharedPreferences("cart", MODE_PRIVATE);
         data = sp.getString("cartdata", "");
         //String json = new Gson().toJson(data);
-        data = data.replaceAll("]\\[",",");
-        data = data.replaceAll("\\[]","");
-
-            Log.v("Regex", data);
-            try {
-                JSONArray jsonArray = new JSONArray(data);
-                Log.v(TAG, jsonArray.toString());
-                int l = jsonArray.length();
-                Log.v("LENGTH OF JSON ARRAY: ",Integer.toString(l));
-
-                for(int i=1; i<jsonArray.length(); i++){
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    Log.v(TAG, jsonObject.toString());
-                    Log.v("I IS: ", Integer.toString(i));
-                    Cart_list item = new Cart_list(jsonObject.getString("title"), jsonObject.getString("id"), jsonObject.getString("img"), jsonObject.getString("count"), Integer.toString(i));
-                    listItems.add(item);
-
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
+        //data = data.replaceAll("]\\[",",");
+        /*data = data.replaceAll("\\[]","");*/
+        /*JSONArray json;
+        try {
+            json = new JSONArray(data);
+            if(!(data.startsWith("[")&&data.endsWith("]")))
+                data = "["+data+"]";
+            /*SharedPreferences sharedPreferences = getSharedPreferences("flag",MODE_PRIVATE);
+            count = sharedPreferences.getInt("count", 0);
+            if(count == 0) {
+                json.remove(json.length()-1);
+                count = 1;
             }
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putInt("count",count);
+            editor.apply();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }*/
+
+
+
+
+            Log.v("REGEX", data);
+
+                String dbpid="", dbtitle="", dblink="", dbquantity="";
+                SQLiteDatabase db = dbHandler.getWritableDatabase();
+                String query = " SELECT * FROM " + TABLE_NAME + " WHERE 1 ";
+
+                Cursor c = db.rawQuery(query, null);
+                c.moveToFirst();
+                listItems.clear();
+
+                while(!c.isAfterLast()){
+                    if(c.getString(c.getColumnIndex("pid"))!=null){
+                        dbpid = c.getString(c.getColumnIndex("pid"));
+                        dbtitle = c.getString(c.getColumnIndex("title"));
+                        dblink = c.getString(c.getColumnIndex("link"));
+
+                        dbquantity = c.getString(c.getColumnIndex("quantity"));
+                        Log.v("PRODUCT ID IS: ", dbpid);
+                        Cart_list arrayList = new Cart_list(dbpid,dbtitle,dblink,dbquantity);
+                        listItems.add(arrayList);
+                        adapter = new Cart_Adapter(listItems, getApplicationContext());
+                        recyclerView.setAdapter(adapter);
+
+                    }
+                    c.moveToNext();
+                }
+
+                c.close();
+
+
             mSwipeRefresh.setRefreshing(false);
 
-            adapter = new Cart_Adapter(listItems,getApplicationContext());
-            recyclerView.setAdapter(adapter);
+
         }
 
 
@@ -111,27 +149,11 @@ public class Cart_Activity extends AppCompatActivity {
     }
 
     public void remove(View view){
-        String newdata = "";
-        TextView index;
-        index = (TextView)findViewById(R.id.index);
-        String idi = index.getText().toString();
-        Log.v("Index is:", idi);
-        try {
-            JSONArray json= new JSONArray(data);
-            json.remove(Integer.parseInt(idi));
-            newdata = json.toString();
-            newdata = newdata.replaceAll("]\\[",",");
-            newdata = newdata.replaceAll("\\[]",",");
-            Log.v("New json String:", newdata);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        SharedPreferences sharedPreferences = getSharedPreferences("cart", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("cartdata", newdata);
-        editor.apply();
+        TextView pid;
+        pid = (TextView)findViewById(R.id.counter);
+        String idi = pid.getText().toString();
+        Log.v("ID IS :",idi);
+        dbHandler.deleteProduct(idi);
         listItems.clear();
         loader();
 

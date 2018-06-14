@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
@@ -37,6 +38,7 @@ import java.util.List;
 import java.util.Set;
 
 
+import Database.DBHandler;
 import Model.Cart_list;
 
 public class blueberry extends AppCompatActivity {
@@ -45,9 +47,10 @@ public class blueberry extends AppCompatActivity {
     ImageView img;
     int count1=1;
     String Cartdata = "";
-    private List<Cart_list> listItems;
+    //private List<Cart_list> listItems;
     SharedPreferences sharedPreferences;
     String productid, texttitle, link, TAG = "CHECK:", jsonur = "https://www.rinebars.com/wp-json/wp/v2/product/", info, para;
+    DBHandler dbHandler;
 
 
 
@@ -71,7 +74,8 @@ public class blueberry extends AppCompatActivity {
         jsonur = jsonur + productid;
         info1 = (TextView)findViewById(R.id.info1);
         info4 = (TextView)findViewById(R.id.info4);
-        listItems = new ArrayList<>();
+        //listItems = new ArrayList<>();
+        dbHandler = new DBHandler(this, null, null, 2);
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
         progressDialog.setCanceledOnTouchOutside(false);
@@ -165,22 +169,31 @@ public class blueberry extends AppCompatActivity {
 
     public void add_to_cart(View view){
 
-        Cart_list item = new Cart_list(texttitle, productid, link, (String) counter1.getText(), "some");
-        listItems.add(item);
+        Cart_list item = new Cart_list( productid,texttitle, link, (String) counter1.getText());
+        dbHandler.addProduct(item);
+        Toast.makeText(blueberry.this,"ITEM ADDED",Toast.LENGTH_SHORT).show();
+        /*listItems.add(item);
         String json = new Gson().toJson(listItems);
-        Cartdata = Cartdata + json;
+        Log.v("STRING IS: ", json);
+        Cartdata = Cartdata + json + ",";
+        Log.v("CARDDATA IS: ", Cartdata);
+        SharedPreferences Preferences = getSharedPreferences("flag",MODE_PRIVATE);
+        SharedPreferences.Editor edit = Preferences.edit();
+        edit.putInt("count",0);
+        edit.apply();
         sharedPreferences = getSharedPreferences("cart", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("cartdata", Cartdata);
         editor.apply();
 
 
-        Toast.makeText(blueberry.this, Cartdata, Toast.LENGTH_SHORT ).show();
+        Toast.makeText(blueberry.this, Cartdata, Toast.LENGTH_SHORT ).show();*/
+
 
 
     }
 
-    @Override
+    /*@Override
     protected void onResume() {
         super.onResume();
         Cartdata = "";
@@ -194,5 +207,5 @@ public class blueberry extends AppCompatActivity {
         Cartdata = "";
         sharedPreferences = getSharedPreferences("cart", MODE_PRIVATE);
         Cartdata = sharedPreferences.getString("cartdata", "");
-    }
+    }*/
 }

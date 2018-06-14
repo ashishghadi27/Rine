@@ -79,6 +79,7 @@ public class Products_Activity extends AppCompatActivity {
 }
 
     private void loadRecyclerViewData() {
+        final RequestQueue requestQueue = Volley.newRequestQueue(this);
         final ProgressDialog progressDialog = new ProgressDialog(this);
         //progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
@@ -99,11 +100,7 @@ public class Products_Activity extends AppCompatActivity {
                         Log.v(TAG, response);
 
                         try {
-                            /*Log.v(TAG, "Here in the Try block");
-                            JSONObject jsonObject = new JSONObject(response);
-                            Log.v(TAG, "Got the json object");
-                            JSONArray array = jsonObject.getJSONArray("title");
-                            Log.v(TAG, "Extracted Array");*/
+
                             JSONArray array = new JSONArray(response);
                             for(int i=0; i<array.length();i++){
                                 final JSONObject o = array.getJSONObject(i);
@@ -142,8 +139,9 @@ public class Products_Activity extends AppCompatActivity {
 
                                         }
                                     });
-                                    RequestQueue requestQueue1 = Volley.newRequestQueue(Products_Activity.this);
-                                    requestQueue1.add(stringRequest1);
+                                    /*RequestQueue requestQueue1 = Volley.newRequestQueue(Products_Activity.this);
+                                    requestQueue1.add(stringRequest1);*/
+                                    requestQueue.add(stringRequest1);
 
                                     Log.v(TAG, "Here in the for loop block");
                                     Log.v(TAG, "THE ID IS "+o.getInt("id"));
@@ -167,7 +165,7 @@ public class Products_Activity extends AppCompatActivity {
 
                     }
                 });
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
         requestQueue.add(stringRequest);
 
 
