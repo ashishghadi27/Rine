@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import com.asg.ashish.rine.R;
 import com.asg.ashish.rine.loadl_link;
 import com.bumptech.glide.Glide;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -31,6 +34,7 @@ class FeedViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
     public TextView txtTitle, txtPubDate, txtContent, link;
     public ImageView feedimage;
     public String passlink, TAG;
+    CardView cv;
 
 
     private ItemClickListener itemClickListener;
@@ -43,6 +47,7 @@ class FeedViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
         txtContent = (TextView)itemView.findViewById(R.id.txtcontent);
         feedimage = (ImageView)itemView.findViewById(R.id.feedimage);
         link = (TextView)itemView.findViewById(R.id.linktext);
+        cv = (CardView)itemView.findViewById(R.id.recipecard);
         itemView.setOnClickListener(this);
         itemView.setOnLongClickListener(this);
     }
@@ -90,6 +95,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder>{
 
     @Override
     public void onBindViewHolder(FeedViewHolder holder, int position) {
+        YoYo.with(Techniques.RubberBand).playOn(holder.cv);
         holder.txtTitle.setText(rssObject.getItems().get(position).getTitle());
         holder.txtPubDate.setText(rssObject.getItems().get(position).getPubDate());
         String textset = rssObject.getItems().get(position).getDescription();

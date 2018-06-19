@@ -20,7 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/rine_background"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/lay">
 
         <RelativeLayout
             android:layout_width="match_parent"

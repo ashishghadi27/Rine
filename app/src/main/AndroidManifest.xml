@@ -62,7 +62,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Cart_Activity" />
-        <activity android:name=".User_dash"></activity>
+        <activity android:name=".User_dash" />
+        <activity android:name=".Per_pro_subscription"></activity>
     </application>
 
 </manifest>

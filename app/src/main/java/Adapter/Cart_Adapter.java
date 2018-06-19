@@ -2,7 +2,9 @@ package Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -22,6 +24,8 @@ import com.asg.ashish.rine.Products_list;
 import com.asg.ashish.rine.R;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
@@ -101,6 +105,7 @@ public class Cart_Adapter extends RecyclerView.Adapter<Cart_Adapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
+        YoYo.with(Techniques.StandUp).playOn(holder.cardView);
         Cart_list list = listItems.get(position);
         holder.title.setText(list.getTitle());
         holder.countertext.setText(list.getId());
@@ -117,6 +122,26 @@ public class Cart_Adapter extends RecyclerView.Adapter<Cart_Adapter.MyViewHolder
                 holder.cardView.setVisibility(View.GONE);
             }
         });
+
+        if(list.getTitle().contains("Blueberry")){
+            holder.cardView.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#1565c0")));
+        }
+        else if(list.getTitle().contains("Strawberry")){
+
+            holder.cardView.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#f50057")));
+        }
+        else if(list.getTitle().contains("Peanut")){
+
+            holder.cardView.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#ffab00")));
+        }
+        else if(list.getTitle().contains("Chocolate")){
+
+            holder.cardView.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#4e342e")));
+        }
+        else {
+
+            holder.cardView.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#1de9b6")));
+        }
 
 
     }

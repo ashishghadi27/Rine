@@ -1,18 +1,17 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+
 
     <android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="0dp"
+
         android:layout_marginBottom="30dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        app:cardCornerRadius="5dp">
+        app:cardElevation="10dp"
+        app:cardCornerRadius="7dp">
 
         <RelativeLayout
             android:id="@+id/cardlayout1"
@@ -29,6 +28,7 @@
                 android:layout_centerHorizontal="true"
                 android:scaleType="centerCrop"
                 android:adjustViewBounds="true"
+                android:transitionName="transition"
 
                 />
 
@@ -43,43 +43,10 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:textColor="#28b180"
+                android:textColor="#ffffff"
                 />
 
-            <!--<android.support.design.widget.FloatingActionButton
-                android:id="@+id/floatproduct1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/floatingcart"
-                android:layout_below="@id/blueberry"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="25dp"
-                android:layout_marginTop="7dp"
-                app:fabSize="mini"/>-->
 
-            <!---<Button
-                android:id="@+id/minus"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:background="@drawable/counter"
-                android:text="@string/minus"
-                android:layout_below="@id/blueberry"
-                android:layout_toStartOf="@id/countertext"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="15dp"
-                android:onClick="decrease_count1"/>
-
-            <Button
-                android:id="@+id/plus"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:background="@drawable/counter"
-                android:text="@string/plus"
-                android:layout_below="@id/blueberry"
-                android:layout_toStartOf="@id/floatproduct1"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="10dp"
-                android:onClick="increase_count1"/>-->
 
             <TextView
                 android:id="@+id/counter"
@@ -100,11 +67,12 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/blueberry"
                 android:text="@string/blueberry"
-                android:textColor="@android:color/background_dark"
+                android:textColor="#ffffff"
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                />
 
             <TextView
                 android:id="@+id/gramtext"
@@ -113,7 +81,9 @@
                 android:layout_below="@id/bluetext"
                 android:layout_marginTop="2dp"
                 android:layout_marginStart="10dp"
-                android:text="@string/gram"/>
+                android:text="@string/gram"
+                android:textColor="#ffffff"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -121,14 +91,7 @@
                 android:visibility="invisible"
                 android:id="@+id/linkholder"/>
 
-            <TextView
-                android:id="@+id/separator1"
-                android:layout_width="290dp"
-                android:layout_height="1dp"
-                android:layout_below="@id/gramtext"
-                android:layout_marginTop="25dp"
-                android:layout_centerHorizontal="true"
-                android:background="#d3d3d3"/>
+
 
             <!--Next Product-->
 
@@ -137,4 +100,3 @@
 
 
     </android.support.v7.widget.CardView>
-</RelativeLayout>

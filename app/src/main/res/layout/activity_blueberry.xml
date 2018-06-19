@@ -89,9 +89,10 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="30dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    app:cardCornerRadius="5dp">
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="10dp">
 
                     <RelativeLayout
                         android:id="@+id/cardlayout1"
@@ -106,7 +107,7 @@
                             android:layout_centerHorizontal="true"
                             android:scaleType="centerCrop"
                             android:adjustViewBounds="true"
-
+                            android:transitionName="transition"
                             />
 
 
@@ -133,7 +134,8 @@
                             android:layout_toStartOf="@id/bluecountertext"
                             android:layout_marginTop="15dp"
                             android:layout_marginEnd="15dp"
-                            android:onClick="decrease_count1"/>
+                            android:onClick="decrease_count1"
+                            android:textColor="#ffffff"/>
 
                         <Button
                             android:id="@+id/plus"
@@ -145,19 +147,21 @@
                             android:layout_toStartOf="@id/floatproduct1"
                             android:layout_marginTop="15dp"
                             android:layout_marginEnd="10dp"
-                            android:onClick="increase_count1"/>
+                            android:onClick="increase_count1"
+                            android:textColor="#ffffff"/>
 
                         <TextView
                             android:id="@+id/bluecountertext"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="1"
-                            android:textColor="#111111"
+                            android:textColor="#ffffff"
                             android:textStyle="bold"
                             android:layout_below="@id/productimg"
                             android:layout_toStartOf="@id/plus"
                             android:layout_marginTop="16dp"
-                            android:layout_marginEnd="15dp"/>
+                            android:layout_marginEnd="15dp"
+                            android:fontFamily="@font/montserrat"/>
                         <!--***************Counter1 End***********-->
 
 
@@ -168,11 +172,12 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/productimg"
                             android:text="@string/blueberry"
-                            android:textColor="@android:color/background_dark"
+                            android:textColor="#ffffff"
                             android:textStyle="bold"
                             android:layout_marginTop="10dp"
                             android:layout_marginStart="10dp"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp"
+                            android:fontFamily="@font/montserrat"/>
 
                         <TextView
                             android:id="@+id/gramtext"
@@ -180,20 +185,23 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/bluetext"
                             android:layout_marginTop="2dp"
+                            android:textColor="#ffffff"
                             android:layout_marginStart="10dp"
-                            android:text="@string/gram"/>
+                            android:text="@string/gram"
+                            android:fontFamily="@font/montserrat"/>
 
                         <TextView
                             android:id="@+id/info1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@android:color/background_dark"
+                            android:textColor="#ffffff"
                             android:textStyle="bold"
                             android:layout_marginTop="10dp"
                             android:layout_marginStart="10dp"
                             android:textSize="16sp"
                             android:layout_below="@id/gramtext"
-                            android:text="Energy Rich Cereal Bar"/>
+                            android:text="Energy Rich Cereal Bar"
+                            android:fontFamily="@font/montserrat"/>
 
                         <TextView
                             android:id="@+id/info2"
@@ -205,31 +213,34 @@
                             android:layout_marginEnd="10dp"
                             android:textSize="16sp"
                             android:layout_below="@id/info1"
+                            android:fontFamily="@font/montserrat"
                             />
 
                         <TextView
                             android:id="@+id/info3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@android:color/background_dark"
+                            android:textColor="#ffffff"
                             android:textStyle="bold"
                             android:layout_marginTop="5dp"
                             android:layout_marginStart="10dp"
                             android:textSize="16sp"
                             android:layout_below="@id/info2"
-                            android:text="Description: "/>
+                            android:text="Description: "
+                            android:fontFamily="@font/montserrat"/>
 
                         <TextView
                             android:id="@+id/info4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#a9a9a9"
+                            android:textColor="#ffffff"
                             android:layout_marginTop="5dp"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
                             android:textSize="16sp"
                             android:layout_below="@id/info3"
-                            android:text="@string/info4"/>
+                            android:text="@string/info4"
+                            android:fontFamily="@font/montserrat"/>
 
                         <Button
                             android:id="@+id/subscribe"
@@ -241,7 +252,9 @@
                             android:background="@drawable/roundedbutton"
                             android:textColor="#ffffff"
                             android:fontFamily="@font/montserrat"
-                            android:layout_marginTop="10dp"/>
+                            android:layout_marginTop="10dp"
+                            android:onClick="subs_activity"
+                            />
 
                         <!--<Space
                             android:layout_width="match_parent"

@@ -12,6 +12,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Fade;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -53,6 +54,13 @@ public class Products_Activity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mSwipeRefresh = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshLayout);
         listItems = new ArrayList<>();
+
+        Fade fade = new Fade();
+        View decor = getWindow().getDecorView();
+        fade.excludeTarget(decor.findViewById(R.id.action_bar_container), true);
+        fade.excludeTarget(android.R.id.statusBarBackground,true);
+        fade.excludeTarget(android.R.id.navigationBarBackground,true);
+        fade.excludeTarget(R.id.lay,true);
 
 
         if(isNetworkAvailable()){
