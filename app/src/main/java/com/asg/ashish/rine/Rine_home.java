@@ -9,9 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 public class Rine_home extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
+    private Button products_button, sucscription_button;
 
 
     @Override
@@ -19,6 +21,8 @@ public class Rine_home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rine_home);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.navi);
+        products_button = findViewById(R.id.productsbutton);
+        sucscription_button = findViewById(R.id.subscriptionbutton);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.bringToFront();
@@ -55,6 +59,23 @@ public class Rine_home extends AppCompatActivity {
         });
 
 
+        products_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Rine_home.this, Products_Activity.class);
+                startActivity(i);
+            }
+        });
+
+        sucscription_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent subs = new Intent(Rine_home.this, Main_subscription.class);
+                startActivity(subs);
+            }
+        });
+
+
 
 
 
@@ -69,10 +90,10 @@ public class Rine_home extends AppCompatActivity {
 
     }
 
-    public void loadProducts(View view){
+    /*public void loadProducts(View view){
         Intent i = new Intent(Rine_home.this, Products_Activity.class);
         startActivity(i);
-    }
+    }*/
 
     public void calbmi(View view){
         Intent i = new Intent(Rine_home.this, BmiActivity.class);

@@ -1,0 +1,651 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navi"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@android:color/background_light"
+        app:itemTextColor="@color/colorPrimaryDark"
+        app:menu="@menu/drawablemenu"
+        android:layout_gravity="end"
+        app:headerLayout="@layout/header"
+        app:itemIconTint="#28b180">
+
+    </android.support.design.widget.NavigationView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rine_background"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/linear">
+
+            <Button
+                android:id="@+id/back"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/back"
+                android:contentDescription="@string/todo"
+                android:onClick="back"/>
+
+            <TextView
+                android:id="@+id/header_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="55dp"
+                android:layout_marginTop="11dp"
+                android:text="12  Pack  Plans"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-smallcaps"
+                />
+
+            <Button
+                android:id="@+id/store"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="80dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/storeicon1"
+                android:onClick="tocart"/>
+
+            <Button
+                android:id="@+id/hamburger"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/ham"
+                android:layout_marginTop="8dp"
+                android:onClick="drawerclick"/>
+
+        </RelativeLayout>
+
+
+
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linear"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:id="@+id/card_subs"
+                    app:cardElevation="10dp"
+                    app:cardCornerRadius="5dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        >
+
+
+
+
+
+                        <android.support.v7.widget.CardView
+                            android:id="@+id/card_view_chocolate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="30dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            app:cardCornerRadius="5dp"
+                            app:cardElevation="10dp"
+                            android:backgroundTint="#4e342e"
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+
+
+                                <ImageView
+                                    android:id="@+id/image_subscription_chocolate"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="0dp"
+                                    android:scaleType="centerCrop"
+                                    android:adjustViewBounds="true"
+                                    android:src="@drawable/ebars"
+                                    android:transitionName="transition" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="M i g h t y   C h o c o l a t e"
+                                    android:textColor="#000000"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:fontFamily="@font/montserrat"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    />
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="10dp"
+                                    android:id="@+id/chocolate_layout"
+                                    >
+
+                                    <Button
+                                        android:id="@+id/minus1"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:background="@drawable/counter"
+                                        android:text="@string/minus"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_marginTop="15dp"
+                                        android:layout_marginStart="70dp"
+                                        android:onClick="decrease_count1"
+                                        android:textColor="#ffffff"/>
+
+                                    <Button
+                                        android:id="@+id/plus1"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:background="@drawable/counter"
+                                        android:text="@string/plus"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_marginTop="15dp"
+                                        android:layout_marginEnd="70dp"
+                                        android:onClick="increase_count1"
+                                        android:textColor="#ffffff"/>
+
+                                    <TextView
+                                        android:id="@+id/chocolatecountertext"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="1"
+                                        android:textColor="#000000"
+                                        android:textStyle="bold"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_marginTop="16dp"
+                                        android:layout_marginEnd="15dp"
+                                        android:fontFamily="@font/montserrat"/>
+
+
+                                </RelativeLayout>
+
+                                <Button
+                                    android:id="@+id/button_chocolate"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:background="@drawable/roundedbutton"
+                                    android:backgroundTint="#000000"
+                                    android:text="C  H  O  O  S  E"
+                                    android:textColor="#ffffff"
+                                    android:fontFamily="@font/montserrat"
+                                    android:textStyle="bold"
+                                    android:onClick="choco_button"
+                                    />
+
+                            </LinearLayout>
+
+
+                        </android.support.v7.widget.CardView>
+
+                        <android.support.v7.widget.CardView
+                            android:id="@+id/card_view_12pack"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="30dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            app:cardCornerRadius="5dp"
+                            app:cardElevation="10dp"
+                            android:backgroundTint="#1565c0"
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+
+
+                                <ImageView
+                                    android:id="@+id/image_subscription_blueberry"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="0dp"
+                                    android:scaleType="centerCrop"
+                                    android:adjustViewBounds="true"
+                                    android:src="@drawable/ebars"
+                                    android:transitionName="transition" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="B l u e b e r r y   B o l t"
+                                    android:textColor="#000000"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:fontFamily="@font/montserrat"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    />
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="10dp"
+                                    android:id="@+id/blueberry_layout">
+
+                                    <Button
+                                        android:id="@+id/minus2"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:background="@drawable/counter"
+                                        android:text="@string/minus"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_marginTop="15dp"
+                                        android:layout_marginStart="70dp"
+                                        android:onClick="decrease_count2"
+                                        android:textColor="#ffffff"/>
+
+                                    <Button
+                                        android:id="@+id/plus2"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:background="@drawable/counter"
+                                        android:text="@string/plus"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_marginTop="15dp"
+                                        android:layout_marginEnd="70dp"
+                                        android:onClick="increase_count2"
+                                        android:textColor="#ffffff"/>
+
+                                    <TextView
+                                        android:id="@+id/bluecountertext"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="1"
+                                        android:textColor="#000000"
+                                        android:textStyle="bold"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_marginTop="16dp"
+                                        android:layout_marginEnd="15dp"
+                                        android:fontFamily="@font/montserrat"/>
+
+
+                                </RelativeLayout>
+
+                                <Button
+                                    android:id="@+id/button_blueberry"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:background="@drawable/roundedbutton"
+                                    android:backgroundTint="#000000"
+                                    android:text="C  H  O  O  S  E"
+                                    android:textColor="#ffffff"
+                                    android:fontFamily="@font/montserrat"
+                                    android:textStyle="bold"
+                                    android:onClick="blueberry_button"
+                                    />
+
+
+
+                            </LinearLayout>
+
+
+                        </android.support.v7.widget.CardView>
+
+                        <android.support.v7.widget.CardView
+                            android:id="@+id/card_view_peanut"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="30dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            app:cardCornerRadius="5dp"
+                            app:cardElevation="10dp"
+                            android:backgroundTint="#ffab00"
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+
+
+                                <ImageView
+                                    android:id="@+id/image_subscription_peanut"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="0dp"
+                                    android:scaleType="centerCrop"
+                                    android:adjustViewBounds="true"
+                                    android:src="@drawable/ebars"
+                                    android:transitionName="transition" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="P e a n u t   B u t t e r   C r u n c h"
+                                    android:textColor="#000000"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:fontFamily="@font/montserrat"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    />
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="10dp"
+                                    android:id="@+id/peanut_layout">
+
+                                    <Button
+                                        android:id="@+id/minus3"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:background="@drawable/counter"
+                                        android:text="@string/minus"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_marginTop="15dp"
+                                        android:layout_marginStart="70dp"
+                                        android:onClick="decrease_count3"
+                                        android:textColor="#ffffff"/>
+
+                                    <Button
+                                        android:id="@+id/plus3"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:background="@drawable/counter"
+                                        android:text="@string/plus"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_marginTop="15dp"
+                                        android:layout_marginEnd="70dp"
+                                        android:onClick="increase_count3"
+                                        android:textColor="#ffffff"/>
+
+                                    <TextView
+                                        android:id="@+id/peanutcountertext"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="1"
+                                        android:textColor="#000000"
+                                        android:textStyle="bold"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_marginTop="16dp"
+                                        android:layout_marginEnd="15dp"
+                                        android:fontFamily="@font/montserrat"/>
+
+
+                                </RelativeLayout>
+
+                                <Button
+                                    android:id="@+id/button_peanut"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:background="@drawable/roundedbutton"
+                                    android:backgroundTint="#000000"
+                                    android:text="C  H  O  O  S  E"
+                                    android:textColor="#ffffff"
+                                    android:fontFamily="@font/montserrat"
+                                    android:textStyle="bold"
+                                    android:onClick="peanut_button"
+                                    />
+
+
+                            </LinearLayout>
+
+
+                        </android.support.v7.widget.CardView>
+
+                        <android.support.v7.widget.CardView
+                            android:id="@+id/card_view_strawberry"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="30dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            app:cardCornerRadius="5dp"
+                            app:cardElevation="10dp"
+                            android:backgroundTint="#f50057"
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+
+                                <ImageView
+                                    android:id="@+id/image_subscription_strawberry"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="0dp"
+                                    android:scaleType="centerCrop"
+                                    android:adjustViewBounds="true"
+                                    android:src="@drawable/ebars"
+                                    android:transitionName="transition" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="N u t t y   S t r a w b e r r y"
+                                    android:textColor="#000000"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:fontFamily="@font/montserrat"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    />
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="10dp"
+                                    android:id="@+id/strawberry_layout">
+
+                                    <Button
+                                        android:id="@+id/minus4"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:background="@drawable/counter"
+                                        android:text="@string/minus"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_marginTop="15dp"
+                                        android:layout_marginStart="70dp"
+                                        android:onClick="decrease_count4"
+                                        android:textColor="#ffffff"/>
+
+                                    <Button
+                                        android:id="@+id/plus4"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:background="@drawable/counter"
+                                        android:text="@string/plus"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_marginTop="15dp"
+                                        android:layout_marginEnd="70dp"
+                                        android:onClick="increase_count4"
+                                        android:textColor="#ffffff"/>
+
+                                    <TextView
+                                        android:id="@+id/strawberrycountertext"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="1"
+                                        android:textColor="#000000"
+                                        android:textStyle="bold"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_marginTop="16dp"
+                                        android:layout_marginEnd="15dp"
+                                        android:fontFamily="@font/montserrat"/>
+
+
+                                </RelativeLayout>
+
+                                <Button
+                                    android:id="@+id/button_strawberry"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:background="@drawable/roundedbutton"
+                                    android:backgroundTint="#000000"
+                                    android:text="C  H  O  O  S  E"
+                                    android:textColor="#ffffff"
+                                    android:fontFamily="@font/montserrat"
+                                    android:textStyle="bold"
+                                    android:onClick="strawberry_button"
+                                    />
+
+                            </LinearLayout>
+
+
+                        </android.support.v7.widget.CardView>
+
+                        <android.support.v7.widget.CardView
+                            android:id="@+id/card_view_assorted"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="30dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            app:cardCornerRadius="5dp"
+                            app:cardElevation="10dp"
+                            android:backgroundTint="#1de9b6"
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+
+                                <ImageView
+                                    android:id="@+id/image_subscription_assorted"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="0dp"
+                                    android:scaleType="centerCrop"
+                                    android:adjustViewBounds="true"
+                                    android:src="@drawable/ebars"
+                                    android:transitionName="transition" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="A s s o r t e d   B o x"
+                                    android:textColor="#000000"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:fontFamily="@font/montserrat"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    />
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="10dp"
+                                    android:id="@+id/assorted_layout">
+
+                                    <Button
+                                        android:id="@+id/minus5"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:background="@drawable/counter"
+                                        android:text="@string/minus"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_marginTop="15dp"
+                                        android:layout_marginStart="70dp"
+                                        android:onClick="decrease_count5"
+                                        android:textColor="#ffffff"/>
+
+                                    <Button
+                                        android:id="@+id/plus5"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:background="@drawable/counter"
+                                        android:text="@string/plus"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_marginTop="15dp"
+                                        android:layout_marginEnd="70dp"
+                                        android:onClick="increase_count5"
+                                        android:textColor="#ffffff"/>
+
+                                    <TextView
+                                        android:id="@+id/assortedcountertext"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="1"
+                                        android:textColor="#000000"
+                                        android:textStyle="bold"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_marginTop="16dp"
+                                        android:layout_marginEnd="15dp"
+                                        android:fontFamily="@font/montserrat"/>
+
+
+                                </RelativeLayout>
+
+                                <Button
+                                    android:id="@+id/button_assorted"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:background="@drawable/roundedbutton"
+                                    android:backgroundTint="#000000"
+                                    android:text="C  H  O  O  S  E"
+                                    android:textColor="#ffffff"
+                                    android:fontFamily="@font/montserrat"
+                                    android:textStyle="bold"
+                                    android:onClick="assorted_button"
+                                    />
+
+                            </LinearLayout>
+
+
+                        </android.support.v7.widget.CardView>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+            </LinearLayout>
+        </ScrollView>
+
+
+
+    </RelativeLayout>
+</android.support.v4.widget.DrawerLayout>

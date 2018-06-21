@@ -63,7 +63,9 @@
         </activity>
         <activity android:name=".Cart_Activity" />
         <activity android:name=".User_dash" />
-        <activity android:name=".Per_pro_subscription"></activity>
+        <activity android:name=".Per_pro_subscription" />
+        <activity android:name=".Main_subscription" />
+        <activity android:name=".Subscription_products"></activity>
     </application>
 
 </manifest>
