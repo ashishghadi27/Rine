@@ -12,6 +12,7 @@
         app:itemTextColor="@color/colorPrimaryDark"
         app:menu="@menu/drawablemenu"
         android:layout_gravity="end"
+        android:id="@+id/nav_view"
         app:headerLayout="@layout/header"
         app:itemIconTint="#28b180">
 

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
@@ -15,6 +16,8 @@ public class Main_subscription extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private Button six_button, twelve_button, eighteen_button;
     TextView counter1;
+    private Navi_drawer navi_drawer;
+    private NavigationView navigationView;
 
 
     @Override
@@ -22,6 +25,9 @@ public class Main_subscription extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_subscription);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.navi);
+        navigationView = findViewById(R.id.nav_view);
+        navi_drawer = new Navi_drawer();
+        navi_drawer.nav(mDrawerLayout, navigationView);
         six_button = findViewById(R.id.button_6pack);
         twelve_button = findViewById(R.id.button_12pack);
         eighteen_button = findViewById(R.id.button_18pack);
@@ -53,6 +59,8 @@ public class Main_subscription extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
     }
 
     public void drawerclick(View view){

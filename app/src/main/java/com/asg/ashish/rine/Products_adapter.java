@@ -104,7 +104,7 @@ public class Products_adapter extends RecyclerView.Adapter<Products_adapter.MyVi
         holder.countertext.setText(list.getId());
         holder.lh.setText(list.getImg());
         Glide.with(context).load(list.getImg()).override(1000,500).into(holder.imgbutton);
-        YoYo.with(Techniques.RubberBand).playOn(holder.cv);
+        YoYo.with(Techniques.FadeIn).playOn(holder.cv);
         if(list.getTitle().contains("Blueberry")){
             holder.cv.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#1565c0")));
         }

@@ -13,7 +13,8 @@
         app:menu="@menu/drawablemenu"
         android:layout_gravity="end"
         app:headerLayout="@layout/header"
-        app:itemIconTint="#28b180">
+        app:itemIconTint="#28b180"
+        android:id="@+id/nav_view">
 
     </android.support.design.widget.NavigationView>
     <RelativeLayout
@@ -107,6 +108,16 @@
                         android:textSize="18sp"
                         android:textStyle="bold"
                         />
+
+                    <Button
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:background="@android:drawable/ic_menu_edit"
+                        android:layout_below="@id/profilepic"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:onClick="edit_name"/>
 
                     <TextView
                         android:id="@+id/dashgender"

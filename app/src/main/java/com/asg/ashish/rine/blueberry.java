@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -44,6 +46,9 @@ public class blueberry extends AppCompatActivity {
     String productid, texttitle, link, TAG = "CHECK:", jsonur = "https://www.rinebars.com/wp-json/wp/v2/product/", info, para;
     DBHandler dbHandler;
     CardView cv;
+    FloatingActionButton cart;
+    private Navi_drawer navi_drawer;
+    private NavigationView navigationView;
 
 
 
@@ -53,11 +58,15 @@ public class blueberry extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blueberry);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.navi);
+        navigationView = findViewById(R.id.nav_view);
+        navi_drawer = new Navi_drawer();
+        navi_drawer.nav(mDrawerLayout, navigationView);
         counter1 = (TextView)findViewById(R.id.bluecountertext);
         titletext = (TextView)findViewById(R.id.bluetext);
         img = (ImageView)findViewById(R.id.productimg);
         subscribe = (Button)findViewById(R.id.subscribe);
         cv = (CardView)findViewById(R.id.card_view);
+        cart = (FloatingActionButton) findViewById(R.id.floatproduct1);
 
         Intent i = getIntent();
         productid = i.getStringExtra("productid");
@@ -81,26 +90,31 @@ public class blueberry extends AppCompatActivity {
         if(texttitle.contains("Blueberry")){
             cv.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#1565c0")));
             subscribe.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0d47a1")));
+            cart.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0d47a1")));
         }
         else if(texttitle.contains("Strawberry")){
 
             cv.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#f50057")));
             subscribe.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#c51162")));
+            cart.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#c51162")));
         }
         else if(texttitle.contains("Peanut")){
 
             cv.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#ffab00")));
             subscribe.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#ff8f00")));
+            cart.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#ff8f00")));
         }
         else if(texttitle.contains("Chocolate")){
 
             cv.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#4e342e")));
             subscribe.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#3e2723")));
+            cart.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#3e2723")));
         }
         else {
 
             cv.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#1de9b6")));
             subscribe.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#28b180")));
+            cart.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#28b180")));
         }
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
@@ -156,6 +170,8 @@ public class blueberry extends AppCompatActivity {
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
+
+
 
 
 

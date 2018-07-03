@@ -9,5 +9,5 @@
         <item android:id="@+id/Calendar" android:title="Calendar" android:icon="@drawable/navicalendar"/>
         <item android:id="@+id/logout" android:title="Logout" android:icon="@drawable/navilogout"/>
         <item android:id="@+id/settings" android:title="Settings" android:icon="@drawable/navisettings"/>
-    </group>>
+    </group>
 </menu>

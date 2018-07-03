@@ -2,6 +2,7 @@ package com.asg.ashish.rine;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,12 +18,17 @@ public class Bmicalulate extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     TextView weigh;
     SpeedView s;
+    private Navi_drawer navi_drawer;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bmicalulate);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.navi);
+        navigationView = findViewById(R.id.nav_view);
+        navi_drawer = new Navi_drawer();
+        navi_drawer.nav(mDrawerLayout, navigationView);
         s = (SpeedView)findViewById(R.id.speedView);
         weigh = (TextView)findViewById(R.id.weight);
         try{
@@ -47,6 +53,8 @@ public class Bmicalulate extends AppCompatActivity {
         }catch (Exception e){
             Toast.makeText(this,"Go Back And Enter Proper Information",Toast.LENGTH_SHORT).show();
         }
+
+
     }
 
     public void drawerclick(View view){

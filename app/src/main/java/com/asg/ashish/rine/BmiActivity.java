@@ -3,6 +3,7 @@ package com.asg.ashish.rine;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ public class BmiActivity extends AppCompatActivity {
     String gender;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    private Navi_drawer navi_drawer;
+    private NavigationView navigationView;
 
 
     @Override
@@ -32,6 +35,9 @@ public class BmiActivity extends AppCompatActivity {
         final Button male = (Button)findViewById(R.id.Male);
         final Button female = (Button)findViewById(R.id.Female);
         final Button submit = (Button)findViewById(R.id.submitdata);
+        navigationView = findViewById(R.id.nav_view);
+        navi_drawer = new Navi_drawer();
+        navi_drawer.nav(mDrawerLayout, navigationView);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,6 +102,8 @@ public class BmiActivity extends AppCompatActivity {
                 male.setBackground(maledraw);
             }
         });
+
+
 
     }
 

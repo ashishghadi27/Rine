@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -23,6 +24,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
+import com.facebook.Profile;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
@@ -40,10 +42,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.UserInfo;
 
 import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -56,6 +61,7 @@ public class SignupActivity extends AppCompatActivity {
     boolean check;
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
+    String newstring;
 
 
     @Override
@@ -68,11 +74,20 @@ public class SignupActivity extends AppCompatActivity {
         password = (EditText)findViewById(R.id.password);
         google = (SignInButton)findViewById(R.id.googlesign_in_button);
         facebook = (LoginButton)findViewById(R.id.facebook);
-        facebook.setReadPermissions(Arrays.asList("public_profile", ""));
+        facebook.setReadPermissions(Arrays.asList("public_profile", "email"));
+
 
         if (isNetworkAvailable()){
             check = (AccessToken.getCurrentAccessToken() == null);
-            if(check){
+            SharedPreferences sharedPreferences = getSharedPreferences("Issignedin",MODE_PRIVATE);
+            String verify = sharedPreferences.getString("verify", "notsigned");
+            if(verify.equals("signed")){
+                Intent i = new Intent(SignupActivity.this, Rine_home.class);
+                startActivity(i);
+                finish();
+
+            }
+            else if(check){
                 FacebookSdk.sdkInitialize(getApplicationContext());
                 AppEventsLogger.activateApp(this);
                 callbackManager = CallbackManager.Factory.create();
@@ -92,8 +107,18 @@ public class SignupActivity extends AppCompatActivity {
                                                         if (data.has("picture")) {
                                                             String profilePicUrl = data.getJSONObject("picture").getJSONObject("data").getString("url");
                                                             String name = data.getString("name");
-                                                            //Toast.makeText(SignupActivity.this,name,Toast.LENGTH_LONG).show();
-                                                            //Log.v("FBURL: ",profilePicUrl);
+                                                            String mail = data.getString("email");
+                                                            Log.v("THE EMAIL IS:", mail);
+                                                            String username = mail;
+                                                            String regex = "(\\w+)@";
+                                                            Pattern p = Pattern.compile(regex);
+                                                            Matcher m = p.matcher(username);
+                                                            String user="";
+                                                            if(m.find())
+                                                                user = m.group(0).replace("@","" );
+
+                                                            Background_Worker background_worker = new Background_Worker(SignupActivity.this);
+                                                            background_worker.execute("register", name, mail, mail, user);
                                                             SharedPreferences preferences = getSharedPreferences("profile", MODE_PRIVATE);
                                                             SharedPreferences.Editor editor = preferences.edit();
                                                             editor.putString("name", name);
@@ -194,6 +219,42 @@ public class SignupActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            String name = user.getDisplayName();
+                            for (UserInfo profile : user.getProviderData()) {
+
+                                // Get the profile photo's url
+                                Uri photoUrl = profile.getPhotoUrl();
+
+                                // Variable holding the original String portion of the url that will be replaced
+                                String originalPieceOfUrl = "s96-c/photo.jpg";
+
+                                // Variable holding the new String portion of the url that does the replacing, to improve image quality
+                                String newPieceOfUrlToAdd = "s400-c/photo.jpg";
+                                String photoPath = photoUrl.toString();
+
+                                // Replace the original part of the Url with the new part
+                                newstring = photoPath.replace(originalPieceOfUrl, newPieceOfUrlToAdd);
+
+                                // Check if the Url path is null
+                            }// End if
+
+                            Log.v("THE PHOTO URL IS: ", newstring);
+                            String mail = user.getEmail();
+                            String username = mail;
+                            String regex = "(\\w+)@";
+                            Pattern p = Pattern.compile(regex);
+                            Matcher m = p.matcher(username);
+                            String User="";
+                            if(m.find())
+                                User = m.group(0).replace("@","" );
+
+                            Background_Worker background_worker = new Background_Worker(SignupActivity.this);
+                            background_worker.execute("register", name, mail, mail, User);
+                            SharedPreferences preferences = getSharedPreferences("profile", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString("name", name);
+                            editor.putString("profilepic", newstring);
+                            editor.apply();
                             Intent myIntent = new Intent(SignupActivity.this, Rine_home.class);
                             startActivity(myIntent);
                             finish();
@@ -242,13 +303,30 @@ public class SignupActivity extends AppCompatActivity {
             String mail = email.getText().toString();
             String pass = password.getText().toString();
             String type = "register";
+            String username = mail;
+            String regex = "(\\w+)@";
+            Pattern p = Pattern.compile(regex);
+            Matcher m = p.matcher(username);
+            String user="";
+            if(m.find())
+                user = m.group(0).replace("@","" );
             Background_Worker background_worker = new Background_Worker(this);
-            background_worker.execute(type, name3, mail, pass);
-            Intent i = new Intent(SignupActivity.this, Rine_home.class);
-            startActivity(i);
-            finish();
+            background_worker.execute(type, name3, mail, pass, user);
+
         }
         else Toast.makeText(SignupActivity.this,"Check Your connection", Toast.LENGTH_SHORT).show();
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            Intent myIntent = new Intent(SignupActivity.this, Rine_home.class);
+            startActivity(myIntent);
+            finish();
+        }
     }
 }

@@ -4,7 +4,7 @@
     android:id="@+id/navi"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    >
     
     <android.support.design.widget.NavigationView
         android:layout_width="wrap_content"
@@ -16,7 +16,8 @@
         app:headerLayout="@layout/header"
         android:id="@+id/nav_view"
         app:itemIconTint="#28b180"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        >
 
     </android.support.design.widget.NavigationView>
     <RelativeLayout
@@ -30,14 +31,17 @@
             android:layout_height="70dp"
             android:id="@+id/linear">
 
-            <ImageView
+            <TextView
                 android:id="@+id/imagerine"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="0dp"
-                android:background="@drawable/homeloogo"
-                android:contentDescription="@string/todo" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:text="Rine Bars"
+                android:textColor="#ffffff"
+                android:fontFamily="@font/montserrat"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
 
             <Button
                 android:id="@+id/store"
@@ -145,7 +149,8 @@
                     android:layout_below="@id/workout"
                     android:layout_marginTop="30dp"
                     android:background="@drawable/ebars"
-                    android:contentDescription="@string/todo" />
+                    android:contentDescription="@string/todo"
+                    android:layout_alignParentBottom="true"/>
 
             </RelativeLayout>
 

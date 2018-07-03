@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -80,6 +82,7 @@ public class Background_Worker extends AsyncTask<String, Void, String> {
                 String name = voids[1];
                 String email = voids[2];
                 String password = voids[3];
+                String username = voids[4];
                 Log.v(TAG, email);
                 Log.v(TAG, password);
                 URL url = new URL((register_url));
@@ -91,7 +94,8 @@ public class Background_Worker extends AsyncTask<String, Void, String> {
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 String post_data = URLEncoder.encode("name",  "UTF-8")+"="+URLEncoder.encode(name,  "UTF-8")+"&"
                         +URLEncoder.encode("email",  "UTF-8")+"="+URLEncoder.encode(email,  "UTF-8")+"&"
-                        +URLEncoder.encode("password",  "UTF-8")+"="+URLEncoder.encode(password,  "UTF-8");
+                        +URLEncoder.encode("password",  "UTF-8")+"="+URLEncoder.encode(password,  "UTF-8")+"&"
+                        +URLEncoder.encode("username",  "UTF-8")+"="+URLEncoder.encode(username,  "UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -126,15 +130,62 @@ public class Background_Worker extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        ProgressDialog mDialog = new ProgressDialog(context);
-        mDialog.setMessage(result);
-        mDialog.show();
+
         if(result.equals("Login success")){
+            ProgressDialog mDialog = new ProgressDialog(context);
+            mDialog.setMessage(result);
+            mDialog.show();
+            SharedPreferences sharedPreferences = context.getSharedPreferences("Issignedin", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("verify", "signed");
+            editor.apply();
             Intent i = new Intent(context, Rine_home.class);
             Log.v(TAG,"intent k aandar");
             context.startActivity(i);
             ((Activity)context).finish();
 
+        }
+        else if(result.equals("Sign Up successful"))
+        {
+            ProgressDialog mDialog = new ProgressDialog(context);
+            mDialog.setMessage(result);
+            mDialog.show();
+            SharedPreferences sharedPreferences = context.getSharedPreferences("Issignedin", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("verify", "signed");
+            editor.apply();
+            Intent i = new Intent(context, Rine_home.class);
+            context.startActivity(i);
+            ((Activity)context).finish();
+        }
+        else if(result.equals("Account already exists please sign in")){
+            CharSequence engines[] = new CharSequence[] {"Sign In"};
+
+            final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Account Already Exists");
+            builder.setItems(engines, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    if(which == 0) {
+                        Intent myIntent = new Intent(context, Sign_in.class);
+                        context.startActivity(myIntent);
+                        ((Activity)context).finish();
+
+                    }
+
+
+
+                }
+            });
+            builder.show();
+        }
+        else {
+            //CharSequence engines[] = new CharSequence[] {"Sign In"};
+
+            final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Something went wrong");
+            builder.show();
         }
     }
 

@@ -4,9 +4,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,8 +44,11 @@ public class Products_Activity extends AppCompatActivity {
     String TAG = "Check ADAPTER", id;
     SwipeRefreshLayout mSwipeRefresh;
     private String img;
-
+    private Navi_drawer navi_drawer;
     public String resp;
+    private NavigationView navigationView;
+    String getting_products;
+    //int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +58,11 @@ public class Products_Activity extends AppCompatActivity {
         recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mSwipeRefresh = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshLayout);
+        navigationView = findViewById(R.id.nav_view);
+        navi_drawer = new Navi_drawer();
+        navi_drawer.nav(mDrawerLayout, navigationView);
         listItems = new ArrayList<>();
+
 
         Fade fade = new Fade();
         View decor = getWindow().getDecorView();
@@ -62,8 +72,14 @@ public class Products_Activity extends AppCompatActivity {
         fade.excludeTarget(R.id.lay,true);
 
 
+
+
+
+
+
         if(isNetworkAvailable()){
             loadRecyclerViewData();
+
         }
         else Toast.makeText(Products_Activity.this, "Please Check Your Connection", Toast.LENGTH_SHORT).show();
         mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -71,6 +87,10 @@ public class Products_Activity extends AppCompatActivity {
             public void onRefresh() {
                 if(isNetworkAvailable()){
                     listItems.clear();
+                    SharedPreferences preferences = getSharedPreferences("saved_products", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("our_products", "");
+                    editor.apply();
                     loadRecyclerViewData();
                     mSwipeRefresh.setRefreshing(false);
                 }
@@ -81,99 +101,130 @@ public class Products_Activity extends AppCompatActivity {
             }
         });
 
-
-
 }
 
     private void loadRecyclerViewData() {
-        final RequestQueue requestQueue = Volley.newRequestQueue(this);
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        //progressDialog.setCancelable(false);
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.setMessage("Loading...");
-        progressDialog.show();
-        progressDialog.setCancelable(true);
-        progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                onBackPressed();
+
+        SharedPreferences preferences = getSharedPreferences("saved_products",MODE_PRIVATE);
+        getting_products = preferences.getString("our_products","");
+
+        if(!getting_products.equals("")){
+            try {
+                JSONArray jsonArrayt = new JSONArray(getting_products);
+                for(int i=0; i<jsonArrayt.length();i++){
+                    JSONObject jsonObjectt = jsonArrayt.getJSONObject(i);
+                    Products_list item = new Products_list(jsonObjectt.getString("title"),jsonObjectt.getString("id"), jsonObjectt.getString("img"));
+                    listItems.add(item);
+                    adapter = new Products_adapter(listItems, getApplicationContext());
+                    recyclerView.setAdapter(adapter);
+
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        });
+        }
 
-        final StringRequest stringRequest = new StringRequest(Request.Method.GET, jsonurl,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.v(TAG, response);
 
-                        try {
+        else {
 
-                            JSONArray array = new JSONArray(response);
-                            for(int i=0; i<array.length();i++){
-                                final JSONObject o = array.getJSONObject(i);
-                                if(!((o.getJSONObject("title").getString("rendered")).contains("Subscription"))){
 
-                                    JSONArray x = o.getJSONObject("_links").getJSONArray("wp:featuredmedia");
-                                    JSONObject y = x.getJSONObject(0);
-                                    String newjsonurl = y.getString("href");
-                                    Log.v("URL IS", newjsonurl);
-                                    StringRequest stringRequest1 = new StringRequest(Request.Method.GET, newjsonurl, new Response.Listener<String>() {
-                                        @Override
-                                        public void onResponse(String response1) {
-                                            try {
-                                                Log.v(TAG, "Here in STRING REQ block");
-                                                JSONObject object= new JSONObject(response1);
-                                                object = object.getJSONObject("guid");
+            final RequestQueue requestQueue = Volley.newRequestQueue(this);
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.setMessage("Loading...");
+            progressDialog.show();
+            progressDialog.setCancelable(true);
+            progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    onBackPressed();
+                }
+            });
 
-                                                img = object.getString("rendered");
-                                                Log.v("IMAGE CHECKER", img);
-                                                Products_list item = new Products_list(o.getJSONObject("title").getString("rendered"),  o.getString("id"), img);
-                                                Log.v("IMAGE CHECKER OUTSIDE", img);
-                                                listItems.add(item);
-                                                progressDialog.dismiss();
-                                                adapter = new Products_adapter(listItems, getApplicationContext());
-                                                recyclerView.setAdapter(adapter);
 
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                                Log.v("IMAGE CHECKER OUTSIDE", "Image exception");
+            final StringRequest stringRequest = new StringRequest(Request.Method.GET, jsonurl,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.v(TAG, response);
+
+                            try {
+
+                                JSONArray array = new JSONArray(response);
+                                for (int i = 0; i < array.length(); i++) {
+                                    final JSONObject o = array.getJSONObject(i);
+                                    if (!((o.getJSONObject("title").getString("rendered")).contains("Subscription"))) {
+
+                                        JSONArray x = o.getJSONObject("_links").getJSONArray("wp:featuredmedia");
+                                        JSONObject y = x.getJSONObject(0);
+                                        String newjsonurl = y.getString("href");
+                                        Log.v("URL IS", newjsonurl);
+                                        StringRequest stringRequest1 = new StringRequest(Request.Method.GET, newjsonurl, new Response.Listener<String>() {
+                                            @Override
+                                            public void onResponse(String response1) {
+                                                try {
+                                                    Log.v(TAG, "Here in STRING REQ block");
+                                                    JSONObject object = new JSONObject(response1);
+                                                    object = object.getJSONObject("guid");
+
+                                                    img = object.getString("rendered");
+                                                    Log.v("IMAGE CHECKER", img);
+                                                    Products_list item = new Products_list(o.getJSONObject("title").getString("rendered"), o.getString("id"), img);
+                                                    Log.v("IMAGE CHECKER OUTSIDE", img);
+                                                    listItems.add(item);
+                                                    progressDialog.dismiss();
+                                                    adapter = new Products_adapter(listItems, getApplicationContext());
+                                                    recyclerView.setAdapter(adapter);
+
+
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                    Log.v("IMAGE CHECKER OUTSIDE", "Image exception");
+                                                }
+
                                             }
+                                        }, new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {
 
-                                        }
-                                    }, new Response.ErrorListener() {
-                                        @Override
-                                        public void onErrorResponse(VolleyError error) {
+                                            }
+                                        });
 
-                                        }
-                                    });
-                                    /*RequestQueue requestQueue1 = Volley.newRequestQueue(Products_Activity.this);
-                                    requestQueue1.add(stringRequest1);*/
-                                    requestQueue.add(stringRequest1);
+                                        requestQueue.add(stringRequest1);
 
-                                    Log.v(TAG, "Here in the for loop block");
-                                    Log.v(TAG, "THE ID IS "+o.getInt("id"));
+                                        Log.v(TAG, "Here in the for loop block");
+                                        Log.v(TAG, "THE ID IS " + o.getInt("id"));
+                                    }
+
                                 }
 
+
+                                Log.v(TAG, "Here in the ADAPTER block");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Log.v(TAG, "Some json exception");
                             }
 
 
-                            Log.v(TAG, "Here in the ADAPTER block");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Log.v(TAG, "Some json exception");
                         }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    });
 
 
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+            requestQueue.add(stringRequest);
 
-                    }
-                });
+        }
 
-        requestQueue.add(stringRequest);
+
+
+
+
 
 
     }
@@ -208,5 +259,27 @@ public class Products_Activity extends AppCompatActivity {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        String json_products = new Gson().toJson(listItems);
+        SharedPreferences preferences = getSharedPreferences("saved_products", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("our_products", json_products);
+        editor.apply();
+        Log.v("THE SAVED LIST IS: ",json_products);
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        String json_products = new Gson().toJson(listItems);
+        SharedPreferences preferences = getSharedPreferences("saved_products", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("our_products", json_products);
+        editor.apply();
+        Log.v("THE SAVED LIST IS: ",json_products);
+    }
 
 }

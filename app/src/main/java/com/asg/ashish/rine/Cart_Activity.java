@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -38,7 +39,9 @@ public class Cart_Activity extends AppCompatActivity {
     String TAG = "Check ADAPTER", id, data="";
     SwipeRefreshLayout mSwipeRefresh;
     int count = 0;
+    private Navi_drawer navi_drawer;
     DBHandler dbHandler;
+    private NavigationView navigationView;
 
 
     @Override
@@ -46,6 +49,9 @@ public class Cart_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart_);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.navi);
+        navigationView = findViewById(R.id.nav_view);
+        navi_drawer = new Navi_drawer();
+        navi_drawer.nav(mDrawerLayout, navigationView);
         recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mSwipeRefresh = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshLayout);

@@ -13,7 +13,8 @@
         app:menu="@menu/drawablemenu"
         android:layout_gravity="end"
         app:headerLayout="@layout/header"
-        app:itemIconTint="#28b180">
+        app:itemIconTint="#28b180"
+        android:id="@+id/nav_view">
 
     </android.support.design.widget.NavigationView>
     <RelativeLayout
@@ -56,7 +57,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="80dp"
                 android:layout_marginTop="7dp"
-                android:background="@drawable/storeicon1" />
+                android:background="@drawable/storeicon1"
+                android:onClick="tocart"/>
 
             <Button
                 android:id="@+id/hamburger"

@@ -105,7 +105,7 @@ public class Cart_Adapter extends RecyclerView.Adapter<Cart_Adapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        YoYo.with(Techniques.StandUp).playOn(holder.cardView);
+        //YoYo.with(Techniques.StandUp).playOn(holder.cardView);
         Cart_list list = listItems.get(position);
         holder.title.setText(list.getTitle());
         holder.countertext.setText(list.getId());

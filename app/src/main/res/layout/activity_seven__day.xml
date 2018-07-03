@@ -13,6 +13,7 @@
         app:menu="@menu/drawablemenu"
         android:layout_gravity="end"
         app:headerLayout="@layout/header"
+        android:id="@+id/nav_view"
         app:itemIconTint="#28b180">
 
     </android.support.design.widget.NavigationView>

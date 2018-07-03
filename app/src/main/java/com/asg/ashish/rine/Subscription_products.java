@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +30,8 @@ public class Subscription_products extends AppCompatActivity {
     String check;
     DBHandler dbHandler;
     View parentLayout;
+    private Navi_drawer navi_drawer;
+    private NavigationView navigationView;
     String choco_image = "http://www.rinebars.com/wp-content/uploads/2018/01/C1.jpg", blueberry_image = "http://www.rinebars.com/wp-content/uploads/2018/01/b1.jpg";
     String strawberry_image = "http://www.rinebars.com/wp-content/uploads/2018/01/s1.jpg", peanut_image = "http://www.rinebars.com/wp-content/uploads/2018/01/p1.jpg", assorted_image = "http://www.rinebars.com/wp-content/uploads/2018/03/assorted.png";
 
@@ -38,6 +41,9 @@ public class Subscription_products extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subscription_products);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.navi);
+        navigationView = findViewById(R.id.nav_view);
+        navi_drawer = new Navi_drawer();
+        navi_drawer.nav(mDrawerLayout, navigationView);
         counter1 = (TextView)findViewById(R.id.chocolatecountertext);
         counter2 = findViewById(R.id.bluecountertext);
         counter3 = findViewById(R.id.peanutcountertext);

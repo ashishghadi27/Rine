@@ -13,6 +13,7 @@
         app:menu="@menu/drawablemenu"
         android:layout_gravity="end"
         app:headerLayout="@layout/header"
+        android:id="@+id/nav_view"
         app:itemIconTint="#28b180">
 
     </android.support.design.widget.NavigationView>
@@ -116,7 +117,7 @@
                             android:id="@+id/floatproduct1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/floatingcart"
+                            android:foreground="@drawable/floatingcart"
                             android:layout_below="@id/productimg"
                             android:layout_alignParentEnd="true"
                             android:layout_marginEnd="15dp"

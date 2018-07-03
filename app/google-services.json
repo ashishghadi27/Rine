@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "665746004485-2vfa6os5krhvqs5l0rdeiosagc6qtnnj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.asg.ashish.rine",
+            "certificate_hash": "e61bfa55b94b5a2612b8fd5557c42f692890f471"
+          }
+        },
+        {
           "client_id": "665746004485-t0e0duf53sf5ek7rp55m3ef844dsirdn.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -40,7 +48,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "665746004485-t0e0duf53sf5ek7rp55m3ef844dsirdn.apps.googleusercontent.com",
+              "client_id": "665746004485-5ogea2bpltp89htv1eu0rsedmi5fh5rl.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

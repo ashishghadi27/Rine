@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -29,11 +30,16 @@ public class Per_pro_subscription extends AppCompatActivity {
     int multiple_delivery_id = 0;
     DBHandler dbHandler;
     String texttitle, link;
+    private Navi_drawer navi_drawer;
+    private NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_per_pro_subscription);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.navi);
+        navigationView = findViewById(R.id.nav_view);
+        navi_drawer = new Navi_drawer();
+        navi_drawer.nav(mDrawerLayout, navigationView);
         counter1 = (TextView)findViewById(R.id.bluecountertext);
         Intent intent = getIntent();
         texttitle = intent.getStringExtra("title");
