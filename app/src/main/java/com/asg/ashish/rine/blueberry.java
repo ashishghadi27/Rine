@@ -3,6 +3,7 @@ package com.asg.ashish.rine;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -43,12 +44,13 @@ public class blueberry extends AppCompatActivity {
     ImageView img;
     int count1=1;
     Button subscribe;
-    String productid, texttitle, link, TAG = "CHECK:", jsonur = "https://www.rinebars.com/wp-json/wp/v2/product/", info, para;
+    private String productid, texttitle, link, TAG = "CHECK:", jsonur = "https://www.rinebars.com/wp-json/wp/v2/product/", info, para, price;
     DBHandler dbHandler;
     CardView cv;
     FloatingActionButton cart;
     private Navi_drawer navi_drawer;
     private NavigationView navigationView;
+
 
 
 
@@ -145,14 +147,17 @@ public class blueberry extends AppCompatActivity {
                             element = document.select("p");
                             para = element.toString();
                             Log.v(TAG, element.toString());
+
                             info = info.replaceAll("<b>","\n");
                             info = info.replace("</b>","\b");
                             info = info.replaceAll("\\<[^>]*>", "");
                             para = para.replace("&nbsp;","");
                             para = para.replaceAll("\\<[^>]*>","");
                             info1.setText(info);
+                            price = info;
                             info4.setText(para);
                             progressDialog.dismiss();
+                            save_price();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -175,9 +180,32 @@ public class blueberry extends AppCompatActivity {
 
 
 
+
+
     }
     public void drawerclick(View view){
         mDrawerLayout.openDrawer(Gravity.RIGHT);
+
+    }
+
+    public void save_price(){
+
+            //Log.v("INFO TEXT", price);
+            String product = titletext.getText().toString();
+            java.util.regex.Pattern p = java.util.regex.Pattern.compile("-?\\d+");
+            java.util.regex.Matcher m = p.matcher(price);
+            if(m.find())
+            {
+                String temp_= m.group();
+                Log.v("PRICE CHECK", temp_);
+                SharedPreferences sharedPreferences = getSharedPreferences("price",MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(product, temp_);
+                editor.apply();
+            }
+
+
+
 
     }
 

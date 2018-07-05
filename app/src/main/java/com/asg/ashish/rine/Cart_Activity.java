@@ -18,10 +18,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +38,9 @@ public class Cart_Activity extends AppCompatActivity {
     private Navi_drawer navi_drawer;
     DBHandler dbHandler;
     private NavigationView navigationView;
+    private TextView total_set;
+    private SharedPreferences sharedPreferences;
+    int total_price = 0;
 
 
     @Override
@@ -58,45 +57,29 @@ public class Cart_Activity extends AppCompatActivity {
         listItems = new ArrayList<>();
         dbHandler = new DBHandler(this, null, null, 2);
         loader();
+
+        total_set = findViewById(R.id.price_set);
+        total_set.setText(sharedPreferences.getString("tp","0"));
         mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 listItems.clear();
                 loader();
+                total_set = findViewById(R.id.price_set);
+                total_set.setText(sharedPreferences.getString("tp","0"));
             }
         });
+
+        sharedPreferences = getSharedPreferences("totalprice",MODE_PRIVATE);
+        total_set = findViewById(R.id.price_set);
+        total_set.setText(sharedPreferences.getString("tp","0"));
+        calt();
 
 
 
     }
 
     public void loader(){
-
-        /*SharedPreferences sp = getSharedPreferences("cart", MODE_PRIVATE);
-        data = sp.getString("cartdata", "");
-        //String json = new Gson().toJson(data);
-        //data = data.replaceAll("]\\[",",");
-        /*data = data.replaceAll("\\[]","");*/
-        /*JSONArray json;
-        try {
-            json = new JSONArray(data);
-            if(!(data.startsWith("[")&&data.endsWith("]")))
-                data = "["+data+"]";
-            /*SharedPreferences sharedPreferences = getSharedPreferences("flag",MODE_PRIVATE);
-            count = sharedPreferences.getInt("count", 0);
-            if(count == 0) {
-                json.remove(json.length()-1);
-                count = 1;
-            }
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putInt("count",count);
-            editor.apply();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
-
-
-
 
             Log.v("REGEX", data);
 
@@ -129,8 +112,11 @@ public class Cart_Activity extends AppCompatActivity {
 
 
             mSwipeRefresh.setRefreshing(false);
+            sharedPreferences = getSharedPreferences("totalprice",MODE_PRIVATE);
+            total_set = findViewById(R.id.price_set);
+            total_set.setText(sharedPreferences.getString("tp","0"));
 
-
+            //Cart_Activity.this.recreate();
         }
 
 
@@ -158,10 +144,19 @@ public class Cart_Activity extends AppCompatActivity {
         TextView pid;
         pid = (TextView)findViewById(R.id.counter);
         String idi = pid.getText().toString();
-        Log.v("ID IS :",idi);
+        /*SharedPreferences sharedPreferences1 = getSharedPreferences("totalprice",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences1.edit();
+        editor.putString("tp", "0");
+        editor.apply();
+        SharedPreferences sharedPreferences2 = getSharedPreferences("totalprice", MODE_PRIVATE);
+        String cp = sharedPreferences1.getString("tp", "0");
+        Log.v("UPDATED PRICE", cp);
+        total_set.setText(sharedPreferences2.getString("tp", "0"));*/
+        Log.v("ID ISSSSSSSSSSSSSSSS :",idi);
         dbHandler.deleteProduct(idi);
         listItems.clear();
         loader();
+
 
 
 
@@ -170,14 +165,50 @@ public class Cart_Activity extends AppCompatActivity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
+        //Cart_Activity.this.recreate();
         listItems.clear();
         loader();
+        /*SharedPreferences sharedPreferences2 = getSharedPreferences("totalprice", MODE_PRIVATE);
+        total_set.setText(sharedPreferences2.getString("tp", "0"));*/
+        total_price = 0;
+        calt();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        //Cart_Activity.this.recreate();
         listItems.clear();
         loader();
+        total_price = 0;
+        /*SharedPreferences sharedPreferences2 = getSharedPreferences("totalprice", MODE_PRIVATE);
+        total_set.setText(sharedPreferences2.getString("tp", "0"));*/
+        calt();
+    }
+
+    public void calt(){
+
+        String dbpid="", dbtitle="", dblink="", dbquantity="";
+
+        SQLiteDatabase db = dbHandler.getWritableDatabase();
+        String query = " SELECT * FROM " + TABLE_NAME + " WHERE 1 ";
+
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+        while(!c.isAfterLast()){
+            if(c.getString(c.getColumnIndex("pid"))!=null){
+                dbtitle = c.getString(c.getColumnIndex("title"));
+                final SharedPreferences sharedPreferences = getSharedPreferences("price", MODE_PRIVATE);
+                String price = sharedPreferences.getString(dbtitle, "360");
+
+                dbquantity = c.getString(c.getColumnIndex("quantity"));
+                total_price = total_price + Integer.parseInt(dbquantity) * Integer.parseInt(price);
+
+            }
+            c.moveToNext();
+        }
+
+        c.close();
+        total_set.setText(String.valueOf(total_price));
     }
 }
