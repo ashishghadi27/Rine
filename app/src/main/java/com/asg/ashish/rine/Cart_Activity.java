@@ -1,6 +1,7 @@
 package com.asg.ashish.rine;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -41,6 +43,7 @@ public class Cart_Activity extends AppCompatActivity {
     private TextView total_set;
     private SharedPreferences sharedPreferences;
     int total_price = 0;
+    private Button checkout;
 
 
     @Override
@@ -54,6 +57,7 @@ public class Cart_Activity extends AppCompatActivity {
         recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mSwipeRefresh = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshLayout);
+        checkout = findViewById(R.id.checkout);
         listItems = new ArrayList<>();
         dbHandler = new DBHandler(this, null, null, 2);
         loader();
@@ -74,6 +78,15 @@ public class Cart_Activity extends AppCompatActivity {
         total_set = findViewById(R.id.price_set);
         total_set.setText(sharedPreferences.getString("tp","0"));
         calt();
+
+
+        checkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Cart_Activity.this, Checkout_details.class);
+                startActivity(intent);
+            }
+        });
 
 
 

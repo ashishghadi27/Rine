@@ -121,6 +121,7 @@ public class SignupActivity extends AppCompatActivity {
                                                             SharedPreferences preferences = getSharedPreferences("profile", MODE_PRIVATE);
                                                             SharedPreferences.Editor editor = preferences.edit();
                                                             editor.putString("name", name);
+                                                            editor.putString("email", mail);
                                                             editor.putString("profilepic", profilePicUrl);
                                                             editor.apply();
 
@@ -253,6 +254,7 @@ public class SignupActivity extends AppCompatActivity {
                             SharedPreferences.Editor editor = preferences.edit();
                             editor.putString("name", name);
                             editor.putString("profilepic", newstring);
+                            editor.putString("email", mail);
                             editor.apply();
                             Intent myIntent = new Intent(SignupActivity.this, Rine_home.class);
                             startActivity(myIntent);
