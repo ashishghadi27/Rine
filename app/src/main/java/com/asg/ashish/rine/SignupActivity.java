@@ -314,6 +314,12 @@ public class SignupActivity extends AppCompatActivity {
             Background_Worker background_worker = new Background_Worker(this);
             background_worker.execute(type, name3, mail, pass, user);
 
+            SharedPreferences preferences = getSharedPreferences("profile", MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("name", name3);
+            editor.putString("email", mail);
+            editor.apply();
+
         }
         else Toast.makeText(SignupActivity.this,"Check Your connection", Toast.LENGTH_SHORT).show();
 
