@@ -87,6 +87,8 @@
                     android:textSize="25sp"
                     android:fontFamily="@font/montserrat"
                     android:background="@drawable/strawberry"
+                    android:stateListAnimator="@null"
+                    android:elevation="10dp"
 
                     />
 
@@ -103,7 +105,9 @@
                     android:text="@string/subscription"
                     android:textColor="@android:color/background_light"
                     android:textSize="24sp"
-                    android:fontFamily="@font/montserrat"/>
+                    android:fontFamily="@font/montserrat"
+                    android:stateListAnimator="@null"
+                    android:elevation="10dp" />
 
 
                 <Button
@@ -145,10 +149,10 @@
                 <ImageView
                     android:id="@+id/imageid"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="850dp"
                     android:layout_below="@id/workout"
                     android:layout_marginTop="30dp"
-                    android:background="@drawable/ebars"
+                    android:background="@drawable/homebanner"
                     android:contentDescription="@string/todo"
                     android:layout_alignParentBottom="true"/>
 

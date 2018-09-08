@@ -3,31 +3,30 @@ package com.asg.ashish.rine;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 
-import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import Interface.ItemClickListener;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class Products_adapter extends RecyclerView.Adapter<Products_adapter.MyViewHolder>  {
 
@@ -36,6 +35,7 @@ public class Products_adapter extends RecyclerView.Adapter<Products_adapter.MyVi
     public String id;
     String TAG = "Check Onclick";
     private ItemClickListener itemClickListener;
+    private String imga[] = new String[5];
 
 
 
@@ -46,15 +46,17 @@ public class Products_adapter extends RecyclerView.Adapter<Products_adapter.MyVi
         public TextView title, countertext, lh;
         public ImageView imgbutton;
         private CardView cv;
+        private Button price;
 
         public MyViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.bluetext);
-            countertext = (TextView)view.findViewById(R.id.counter);
-            imgbutton = (ImageView) view.findViewById(R.id.blueberry);
-            lh = (TextView) view.findViewById(R.id.linkholder);
+            title = view.findViewById(R.id.bluetext);
+            countertext = view.findViewById(R.id.counter);
+            imgbutton = view.findViewById(R.id.blueberry);
+            lh = view.findViewById(R.id.linkholder);
             context = view.getContext();
-            cv = (CardView)view.findViewById(R.id.card_view);
+            cv = view.findViewById(R.id.card_view);
+            price = view.findViewById(R.id.price);
             view.setOnClickListener(this);
 
         }
@@ -66,9 +68,20 @@ public class Products_adapter extends RecyclerView.Adapter<Products_adapter.MyVi
             //Toast.makeText(v.getContext(),countertext.getText(), Toast.LENGTH_SHORT).show();
             Intent i = new Intent(v.getContext(), blueberry.class);
 
+            SharedPreferences sharedPreferences = context.getSharedPreferences("sendpro", MODE_PRIVATE);
+            String imga = sharedPreferences.getString(title.getText().toString()+"a","");
+            String imgb = sharedPreferences.getString(title.getText().toString()+"b","");
+            String imgc = sharedPreferences.getString(title.getText().toString()+"c","");
+            String imgd = sharedPreferences.getString(title.getText().toString()+"d","");
+            String imgdesc = sharedPreferences.getString(title.getText().toString()+"desc","");
+
             i.putExtra("productid", countertext.getText());
             i.putExtra("title", title.getText());
-            i.putExtra("link", lh.getText());
+            i.putExtra("link1", imga);
+            i.putExtra("link2", imgb);
+            i.putExtra("link3", imgc);
+            i.putExtra("link4", imgd);
+            i.putExtra("description", imgdesc);
             //v.getContext().startActivity(i);
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity)context,imgbutton, ViewCompat.getTransitionName(imgbutton));
             v.getContext().startActivity(i,optionsCompat.toBundle());
@@ -102,8 +115,35 @@ public class Products_adapter extends RecyclerView.Adapter<Products_adapter.MyVi
         Products_list list = listItems.get(position);
         holder.title.setText(list.getTitle());
         holder.countertext.setText(list.getId());
-        holder.lh.setText(list.getImg());
-        Glide.with(context).load(list.getImg()).override(1000,500).into(holder.imgbutton);
+        //holder.lh.setText(list.getImg());
+        //imga  = new String []{list.getImg1(), list.getImg2(), list.getImg3(), list.getImg4(), list.getDescription()};
+        SharedPreferences sharedPreferences = context.getSharedPreferences("sendpro", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(list.getTitle()+ "a", list.getImg1() );
+        editor.putString(list.getTitle()+ "b", list.getImg2() );
+        editor.putString(list.getTitle()+ "c", list.getImg3() );
+        editor.putString(list.getTitle()+ "d", list.getImg4() );
+        editor.putString(list.getTitle()+ "desc", list.getDescription() );
+        editor.apply();
+
+        Log.v("GET IMG", list.getImg1());
+        if(Integer.parseInt(list.getRegular_price()) > Integer.parseInt(list.getSale_price())){
+            holder.price.setText("Rs " + list.getSale_price());
+            SharedPreferences sharedPreferences1 = context.getSharedPreferences("price",MODE_PRIVATE);
+            SharedPreferences.Editor editor1 = sharedPreferences.edit();
+            editor.putString(list.getTitle(), list.getSale_price());
+            editor.apply();
+        }
+        else{
+            holder.price.setText("Rs " + list.getRegular_price());
+            SharedPreferences sharedPreferences1 = context.getSharedPreferences("price",MODE_PRIVATE);
+            SharedPreferences.Editor editor1 = sharedPreferences.edit();
+            editor.putString(list.getTitle(), list.getRegular_price());
+            editor.apply();
+        }
+
+
+        Glide.with(context).load(list.getImg1()).override(1000,500).placeholder(R.drawable.sampleprofile).error(R.drawable.sampleprofile).animate(R.anim.fadein).into(holder.imgbutton);
         YoYo.with(Techniques.FadeIn).playOn(holder.cv);
         if(list.getTitle().contains("Blueberry")){
             holder.cv.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#1565c0")));

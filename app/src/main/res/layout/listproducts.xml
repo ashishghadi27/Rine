@@ -29,10 +29,11 @@
                 android:scaleType="centerCrop"
                 android:adjustViewBounds="true"
                 android:transitionName="transition"
+                android:src="@drawable/sampleprofile"
 
                 />
 
-           <!-- <Button
+            <Button
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@drawable/rupees"
@@ -43,8 +44,11 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
+                android:id="@+id/price"
                 android:textColor="#ffffff"
-                />-->
+                android:textSize="12sp"
+                android:textAllCaps="false"
+                />
 
 
 

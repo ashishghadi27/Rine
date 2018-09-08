@@ -1,18 +1,10 @@
 package Database;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
-
-import com.asg.ashish.rine.Cart_Activity;
-
-import java.util.ArrayList;
 
 import Adapter.Cart_Adapter;
 import Model.Cart_list;
@@ -29,6 +21,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_PID = "pid";
     public static final String COLUMN_IMG = "link";
     public static final String COLUMN_QUANTITY = "quantity";
+
 
     public DBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABSE_NAME, factory, DATABSE_VERSION);

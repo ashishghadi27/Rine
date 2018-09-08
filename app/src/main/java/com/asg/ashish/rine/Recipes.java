@@ -56,11 +56,11 @@ public class Recipes extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipes);
-        recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
-        mSwipeRefresh = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshLayout);
+        recyclerView = findViewById(R.id.recyclerView);
+        mSwipeRefresh = findViewById(R.id.swipeRefreshLayout);
         LinearLayoutManager linearLayoutManager= new LinearLayoutManager(getBaseContext(),LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.navi);
+        mDrawerLayout = findViewById(R.id.navi);
         navigationView = findViewById(R.id.nav_view);
         navi_drawer = new Navi_drawer();
         navi_drawer.nav(mDrawerLayout, navigationView);
@@ -81,6 +81,9 @@ public class Recipes extends AppCompatActivity {
         loadRecipe();
         else
             Toast.makeText(Recipes.this, "Please Check Your Connection", Toast.LENGTH_SHORT).show();
+        adapter = new Recipe_adapter(listItems, getApplicationContext());
+        recyclerView.setAdapter(adapter);
+
 
 
 
@@ -135,8 +138,10 @@ public class Recipes extends AppCompatActivity {
                                         listItems.add(item);
                                         progressDialog.dismiss();
 
-                                        adapter = new Recipe_adapter(listItems, getApplicationContext());
-                                        recyclerView.setAdapter(adapter);
+                                        //adapter = new Recipe_adapter(listItems, getApplicationContext());
+                                        //recyclerView.smoothScrollToPosition();
+                                        adapter.notifyDataSetChanged();
+
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();

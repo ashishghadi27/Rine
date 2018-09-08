@@ -10,13 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.asg.ashish.rine.Cart_Activity;
 import com.asg.ashish.rine.R;
-import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -37,31 +35,26 @@ public class Cart_Adapter extends RecyclerView.Adapter<Cart_Adapter.MyViewHolder
     public int total_price = 0;
 
 
-
-
-
-
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, countertext, lh, count, Remove;
         public ImageView imgbutton;
         CardView cardView;
-        private Button price_button;
+        private TextView price_button;
         private TextView total_set;
 
 
 
         public MyViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.bluetext);
-            countertext = (TextView)view.findViewById(R.id.counter);
-            imgbutton = (ImageView) view.findViewById(R.id.blueberry);
-            lh = (TextView) view.findViewById(R.id.linkholder);
-            count = (TextView)view.findViewById(R.id.count);
-            Remove = (TextView) view.findViewById(R.id.remove);
+            title = view.findViewById(R.id.bluetext);
+            countertext = view.findViewById(R.id.counter);
+            //imgbutton = (ImageView) view.findViewById(R.id.blueberry);
+            lh = view.findViewById(R.id.linkholder);
+            count = view.findViewById(R.id.count);
+            Remove = view.findViewById(R.id.remove);
             price_button = view.findViewById(R.id.product_price);
             dbHandler = new DBHandler(view.getContext(), null, null, 2);
-            cardView = (CardView)view.findViewById(R.id.card_view);
+            cardView = view.findViewById(R.id.card_view);
             total_set = view.findViewById(R.id.price_set);
 
 
@@ -69,19 +62,6 @@ public class Cart_Adapter extends RecyclerView.Adapter<Cart_Adapter.MyViewHolder
 
         }
 
-
-        /*@Override
-        public void onClick(View v) {
-
-            //Toast.makeText(v.getContext(),countertext.getText(), Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(v.getContext(), blueberry.class);
-
-            i.putExtra("productid", countertext.getText());
-            i.putExtra("title", title.getText());
-            i.putExtra("link", lh.getText());
-            v.getContext().startActivity(i);
-
-        }*/
     }
 
 
@@ -112,7 +92,7 @@ public class Cart_Adapter extends RecyclerView.Adapter<Cart_Adapter.MyViewHolder
         holder.title.setText(list.getTitle());
         holder.countertext.setText(list.getId());
         holder.lh.setText(list.getImg());
-        Glide.with(context).load(list.getImg()).override(1000,500).into(holder.imgbutton);
+        //Glide.with(context).load(list.getImg()).override(1000,500).into(holder.imgbutton);
         holder.count.setText(list.getCount());
         Log.v("ID IN ADAPTER IS",list.getId());
         final SharedPreferences sharedPreferences = context.getSharedPreferences("price", MODE_PRIVATE);
@@ -169,11 +149,6 @@ public class Cart_Adapter extends RecyclerView.Adapter<Cart_Adapter.MyViewHolder
         SharedPreferences.Editor editor = sharedPreferences1.edit();
         editor.putString("tp", Integer.toString(total_price));
         editor.apply();
-
-
-
-
-
 
 
     }

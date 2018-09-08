@@ -102,6 +102,13 @@ public class Navi_drawer  {
                         return true;
 
 
+                    case R.id.orders:
+                        Intent intenta = new Intent(context, Orders.class);
+                        context.startActivity(intenta);
+                        finalMDrawerLayout.closeDrawer(Gravity.END);
+                        return true;
+
+
 
 
 

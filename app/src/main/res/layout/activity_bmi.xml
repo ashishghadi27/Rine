@@ -96,6 +96,7 @@
                 android:textColor="@color/cardview_light_background"
                 android:backgroundTint="#ffffff"
                 android:layout_marginStart="0dp"
+                android:singleLine="true"
                 android:textAlignment="center"
                 android:textSize="25sp"/>
 
@@ -166,6 +167,7 @@
             android:layout_marginStart="0dp"
             android:layout_centerHorizontal="true"
             android:hint="Kg"
+            android:singleLine="true"
             android:gravity="end"
             android:paddingRight="15dp"
             android:textColorHint="@color/cardview_light_background"
@@ -207,6 +209,7 @@
                 android:layout_marginEnd="25dp"
                 android:layout_marginTop="20dp"
                 android:hint="ft"
+                android:singleLine="true"
                 android:textColorHint="@color/cardview_light_background"
                 android:gravity="end"
 
@@ -225,6 +228,7 @@
                 android:layout_toEndOf="@id/spacer"
                 android:layout_marginStart="25dp"
                 android:hint="in"
+                android:singleLine="true"
                 android:textColorHint="@color/cardview_light_background"
                 android:gravity="end"
                 />
@@ -240,7 +244,8 @@
             android:layout_below="@id/heightholder"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="80dp"
-            android:textColor="#28b180"
+            android:textColor="#ffffff"
+            android:fontFamily="@font/montserrat"
             android:background="@drawable/bmibackground"
 
             />

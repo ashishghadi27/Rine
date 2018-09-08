@@ -67,12 +67,12 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        firstname = (EditText)findViewById(R.id.name);
-        lastname = (EditText)findViewById(R.id.lastname);
-        email = (EditText)findViewById(R.id.email);
-        password = (EditText)findViewById(R.id.password);
-        google = (SignInButton)findViewById(R.id.googlesign_in_button);
-        facebook = (LoginButton)findViewById(R.id.facebook);
+        firstname = findViewById(R.id.name);
+        lastname = findViewById(R.id.lastname);
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+        google = findViewById(R.id.googlesign_in_button);
+        facebook = findViewById(R.id.facebook);
         facebook.setReadPermissions(Arrays.asList("public_profile", "email"));
 
 

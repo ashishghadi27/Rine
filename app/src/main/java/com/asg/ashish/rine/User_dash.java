@@ -3,22 +3,18 @@ package com.asg.ashish.rine;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-
-import org.w3c.dom.Text;
 
 public class User_dash extends AppCompatActivity {
 
@@ -39,13 +35,13 @@ public class User_dash extends AppCompatActivity {
         navigationView = findViewById(R.id.nav_view);
         navi_drawer = new Navi_drawer();
         navi_drawer.nav(drawerLayout, navigationView);
-        agetext = (TextView)findViewById(R.id.dashage);
-        heighttext = (TextView)findViewById(R.id.dashheight);
-        weighttext = (TextView) findViewById(R.id.dashweight);
-        bmitext = (TextView)findViewById(R.id.dashbmi);
-        gendertext = (TextView)findViewById(R.id.dashgender);
-        name = (TextView)findViewById(R.id.profilename);
-        profilepic = (ImageView)findViewById(R.id.profilepic);
+        agetext = findViewById(R.id.dashage);
+        heighttext = findViewById(R.id.dashheight);
+        weighttext = findViewById(R.id.dashweight);
+        bmitext = findViewById(R.id.dashbmi);
+        gendertext = findViewById(R.id.dashgender);
+        name = findViewById(R.id.profilename);
+        profilepic = findViewById(R.id.profilepic);
         preferences = getSharedPreferences("profile", MODE_PRIVATE);
         age = preferences.getString("age","--");
         height = preferences.getString("height","--");
@@ -100,9 +96,16 @@ public class User_dash extends AppCompatActivity {
 
         // Setting Dialog Message
        // alertDialog.setMessage("Enter Password");
-            final EditText input = new EditText(this);
-        alertDialog.setView(input);
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(50, 0, 30, 0);
 
+        final EditText input = new EditText(User_dash.this);
+        layout.addView(input, params);
+
+        alertDialog.setView(layout);
         // Setting Icon to Dialog
         alertDialog.setIcon(R.drawable.splash);
 

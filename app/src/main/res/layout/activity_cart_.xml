@@ -62,6 +62,16 @@
                 android:layout_marginTop="8dp"
                 android:onClick="drawerclick"/>
 
+            <Button
+                android:id="@+id/coupon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_toStartOf="@id/hamburger"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/coupon"
+                android:layout_marginTop="8dp"
+                android:onClick="applycoupon"/>
+
         </RelativeLayout>
 
 
@@ -69,13 +79,13 @@
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/linear"
-            android:layout_marginTop="20dp"
-            android:layout_above="@id/t_price"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="0dp"
+            android:layout_above="@id/subtotal_text"
+            android:layout_marginBottom="5dp"
 
             >
             <android.support.v7.widget.CardView
@@ -118,28 +128,86 @@
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_alignParentBottom="true"
             android:background="@drawable/roundedbutton"
             android:text="Checkout"
             android:backgroundTint="#000000"
             android:textColor="#ffffff"
             android:fontFamily="@font/montserrat"
-            android:textSize="15sp"
+            android:textSize="10sp"
             android:id="@+id/checkout"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total Price"
+            android:layout_above="@id/applied_text"
+            android:text="Cart Total"
+            android:layout_marginBottom="7dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"
+            android:textColor="#ffffff"
+            android:fontFamily="@font/montserrat"
+            android:textSize="12sp"
+            android:id="@+id/subtotal_text"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/t_price"
+            android:text="Discount Applied"
+            android:layout_marginBottom="7dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"
+            android:textColor="#ffffff"
+            android:fontFamily="@font/montserrat"
+            android:textSize="12sp"
+            android:id="@+id/applied_text"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Amount Payable"
             android:layout_above="@id/checkout"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="7dp"
             android:layout_alignParentStart="true"
             android:layout_marginStart="20dp"
             android:id="@+id/t_price"
             android:textColor="#ffffff"
             android:fontFamily="@font/montserrat"
-            android:textSize="18sp"
+            android:textSize="12sp"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="="
+            android:layout_centerHorizontal="true"
+            android:id="@+id/zeroequal"
+            android:layout_above="@id/firstequal"
+            android:layout_marginBottom="7dp"
+            android:fontFamily="@font/montserrat"
+            android:textColor="#ffffff"
+            android:textSize="12sp"
+
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="="
+            android:layout_centerHorizontal="true"
+            android:id="@+id/firstequal"
+            android:layout_above="@id/equal"
+            android:layout_marginBottom="7dp"
+            android:fontFamily="@font/montserrat"
+            android:textColor="#ffffff"
+            android:textSize="12sp"
+
 
             />
 
@@ -150,10 +218,10 @@
             android:layout_centerHorizontal="true"
             android:id="@+id/equal"
             android:layout_above="@id/checkout"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="7dp"
             android:fontFamily="@font/montserrat"
             android:textColor="#ffffff"
-            android:textSize="18sp"
+            android:textSize="12sp"
 
 
             />
@@ -161,20 +229,44 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1000"
+            android:text="0"
             android:layout_alignParentEnd="true"
-            android:layout_above="@id/checkout"
-            android:layout_marginBottom="10dp"
-            android:id="@+id/price_set"
+            android:layout_above="@id/discount_price"
+            android:layout_marginBottom="7dp"
+            android:id="@+id/subtotal_price"
             android:layout_marginEnd="20dp"
             android:fontFamily="@font/montserrat"
-            android:textSize="18sp"
+            android:textSize="12sp"
             android:textColor="#ffffff"
             />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:layout_alignParentEnd="true"
+            android:layout_above="@id/price_set"
+            android:layout_marginBottom="7dp"
+            android:id="@+id/discount_price"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/montserrat"
+            android:textSize="12sp"
+            android:textColor="#ffffff"
+            />
 
-
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:layout_alignParentEnd="true"
+            android:layout_above="@id/checkout"
+            android:layout_marginBottom="7dp"
+            android:id="@+id/price_set"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/montserrat"
+            android:textSize="12sp"
+            android:textColor="#ffffff"
+            />
 
     </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>

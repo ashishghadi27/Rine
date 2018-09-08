@@ -8,10 +8,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         app:cardCornerRadius="5dp"
         android:background="@android:color/transparent"
         android:backgroundTint="#d3d3d3">
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             >
 
-            <ImageView
+            <!--<ImageView
 
                 android:id="@+id/blueberry"
                 android:layout_width="match_parent"
@@ -32,33 +32,33 @@
                 android:scaleType="centerCrop"
                 android:adjustViewBounds="true"
 
-                />
+                />-->
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:text="  X  "
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:background="@android:drawable/ic_menu_delete"
                 android:layout_alignParentEnd="true"
-                android:textSize="18sp"
+                android:textSize="10sp"
+                android:padding="5dp"
                 android:textColor="#ffffff"
                 android:id="@+id/remove"
                 />
 
-            <Button
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/rupees"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/rupee"
                 android:layout_below="@id/blueberry"
                 android:foregroundTint="#28b180"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:gravity="center"
                 android:textAllCaps="false"
                 android:id="@+id/product_price"
                 android:textColor="#ffffff"
-                android:textSize="12sp"
+
                 />
 
             <!--<android.support.design.widget.FloatingActionButton
@@ -117,28 +117,21 @@
                 android:text="@string/blueberry"
                 android:textColor="#ffffff"
                 android:textStyle="bold"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginStart="10dp"
-                android:textSize="16sp"/>
+                android:textSize="15sp"/>
 
-            <TextView
-                android:id="@+id/gramtext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/bluetext"
-                android:layout_marginTop="2dp"
-                android:layout_marginStart="10dp"
-                android:text="@string/gram"
-                android:textColor="#ffffff"/>
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#ffffff"
-                android:layout_below="@id/gramtext"
+                android:layout_below="@id/bluetext"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="10dp"
                 android:textStyle="bold"
+                android:layout_marginBottom="10dp"
                 android:text="Quantity:"
                 />
 
@@ -146,10 +139,10 @@
                 android:id="@+id/count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/gramtext"
-                android:layout_marginTop="25dp"
+                android:layout_below="@id/product_price"
+                android:layout_marginTop="10dp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="40dp"
+                android:layout_marginEnd="20dp"
                 android:text="2"
                 android:textColor="#ffffff"/>
 
@@ -160,14 +153,7 @@
                 android:visibility="invisible"
                 android:id="@+id/linkholder"/>
 
-            <TextView
-                android:id="@+id/separator1"
-                android:layout_width="290dp"
-                android:layout_height="1dp"
-                android:layout_below="@id/count"
-                android:layout_marginTop="25dp"
-                android:layout_centerHorizontal="true"
-                android:background="#d3d3d3"/>
+
 
             <TextView
                 android:layout_width="wrap_content"

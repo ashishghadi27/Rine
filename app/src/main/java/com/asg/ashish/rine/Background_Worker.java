@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -26,11 +27,13 @@ import java.net.URLEncoder;
  * Created by ashish on 12/3/18.
  */
 
-public class Background_Worker extends AsyncTask<String, Void, String> {
+public class
+Background_Worker extends AsyncTask<String, Void, String> {
 
     Context context;
     AlertDialog alertDialog;
     String TAG = "testPhp";
+    private ProgressDialog mDialog;
     Background_Worker(Context ctx) {
         context = ctx;
     }
@@ -40,6 +43,9 @@ public class Background_Worker extends AsyncTask<String, Void, String> {
         String type = voids[0];
         String login_url = "http://www.rinebars.com/api/login.php";
         String register_url = "http://www.rinebars.com/api/register.php";
+        String hashurl = "http://www.rinebars.com/api/moneyhash.php";
+        String orderurl = "http://www.rinebars.com/httpdocs/wp-content/themes/rine-child/ordersupdate.php";
+        String idlink = "http://www.rinebars.com/api/getid.php";
         if(type.equals("login")){
             try {
                 String user_name = voids[1];
@@ -118,14 +124,168 @@ public class Background_Worker extends AsyncTask<String, Void, String> {
                 e.printStackTrace();
             }
         }
+        else if(type.equals("hash")){
+            try {
+                String firstname = voids[1];
+                String email = voids[2];
+                String productinfo = voids[3];
+                String amount = voids[4];
+                String txnid  = voids[5];
+                String addr1 = voids[6];
+                String addr2 = voids[7];
+                String state = voids[8];
+                String city = voids[9];
+                String pin = voids[10];
+
+                URL url = new URL((hashurl));
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("firstname",  "UTF-8")+"="+URLEncoder.encode(firstname,  "UTF-8")+"&"
+                        +URLEncoder.encode("email",  "UTF-8")+"="+URLEncoder.encode(email,  "UTF-8")+"&"
+                        +URLEncoder.encode("productinfo",  "UTF-8")+"="+URLEncoder.encode(productinfo,  "UTF-8")+"&"
+                        +URLEncoder.encode("amount",  "UTF-8")+"="+URLEncoder.encode(amount,  "UTF-8")+"&"
+                        +URLEncoder.encode("txnid",  "UTF-8")+"="+URLEncoder.encode(txnid,  "UTF-8")+"&"
+                        +URLEncoder.encode("addr1",  "UTF-8")+"="+URLEncoder.encode(addr1,  "UTF-8")+"&"
+                        +URLEncoder.encode("addr2",  "UTF-8")+"="+URLEncoder.encode(addr2,  "UTF-8")+"&"
+                        +URLEncoder.encode("state",  "UTF-8")+"="+URLEncoder.encode(state,  "UTF-8")+"&"
+                        +URLEncoder.encode("city",  "UTF-8")+"="+URLEncoder.encode(city,  "UTF-8")+"&"
+                        +URLEncoder.encode("pin",  "UTF-8")+"="+URLEncoder.encode(pin,  "UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                String hasher = "";
+                String line = "";
+                while ((line = bufferedReader.readLine()) != null){
+                    hasher += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                SharedPreferences sharedPreferences = context.getSharedPreferences("Hash", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("sequence", hasher);
+                editor.apply();
+                return "Processing";
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(type.equals("orders")){
+            try {
+                String firstname = voids[1];
+                String lastname = voids[2];
+                String email = voids[3];
+                String productinfo = voids[4];
+                String amount = voids[5];
+                String addr1 = voids[6];
+                String addr2 = voids[7];
+                String state = voids[8];
+                String city = voids[9];
+                String pin = voids[10];
+
+                URL url = new URL((orderurl));
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("first_name",  "UTF-8")+"="+URLEncoder.encode(firstname,  "UTF-8")+"&"
+                        +URLEncoder.encode("mail",  "UTF-8")+"="+URLEncoder.encode(email,  "UTF-8")+"&"
+                        +URLEncoder.encode("productinfo",  "UTF-8")+"="+URLEncoder.encode(productinfo,  "UTF-8")+"&"
+                        +URLEncoder.encode("amount",  "UTF-8")+"="+URLEncoder.encode(amount,  "UTF-8")+"&"
+                        +URLEncoder.encode("last_name",  "UTF-8")+"="+URLEncoder.encode(lastname,  "UTF-8")+"&"
+                        +URLEncoder.encode("addr1",  "UTF-8")+"="+URLEncoder.encode(addr1,  "UTF-8")+"&"
+                        +URLEncoder.encode("addr2",  "UTF-8")+"="+URLEncoder.encode(addr2,  "UTF-8")+"&"
+                        +URLEncoder.encode("state",  "UTF-8")+"="+URLEncoder.encode(state,  "UTF-8")+"&"
+                        +URLEncoder.encode("city",  "UTF-8")+"="+URLEncoder.encode(city,  "UTF-8")+"&"
+                        +URLEncoder.encode("code",  "UTF-8")+"="+URLEncoder.encode(pin,  "UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                String hasher = "";
+                String line = "";
+                while ((line = bufferedReader.readLine()) != null){
+                    hasher += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                SharedPreferences sharedPreferences = context.getSharedPreferences("Orders", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("sequence", hasher);
+                Log.v("WOOCOMERCE", hasher);
+                editor.apply();
+                return "Processing";
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(type.equals("getid")){
+            try {
+
+                String email = voids[1];
+
+                URL url = new URL((idlink));
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("user_name",  "UTF-8")+"="+URLEncoder.encode(email,  "UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                String id = "";
+                String line = "";
+                while ((line = bufferedReader.readLine()) != null){
+                    id += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                SharedPreferences sharedPreferences = context.getSharedPreferences("User", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("id", id);
+                Log.v("ID IS", id);
+                editor.apply();
+                return "Gotid";
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         return null;
     }
 
     @Override
     protected void onPreExecute() {
-        ProgressDialog mDialog = new ProgressDialog(context);
+        mDialog = new ProgressDialog(context);
         mDialog.setMessage("Loading");
         mDialog.show();
+
     }
 
     @Override
@@ -139,25 +299,14 @@ public class Background_Worker extends AsyncTask<String, Void, String> {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("verify", "signed");
             editor.apply();
+            mDialog.dismiss();
             Intent i = new Intent(context, Rine_home.class);
             Log.v(TAG,"intent k aandar");
             context.startActivity(i);
             ((Activity)context).finish();
 
         }
-        else if(result.equals("Sign Up successful"))
-        {
-            ProgressDialog mDialog = new ProgressDialog(context);
-            mDialog.setMessage(result);
-            mDialog.show();
-            SharedPreferences sharedPreferences = context.getSharedPreferences("Issignedin", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("verify", "signed");
-            editor.apply();
-            Intent i = new Intent(context, Rine_home.class);
-            context.startActivity(i);
-            ((Activity)context).finish();
-        }
+
         else if(result.equals("Account already exists please sign in")){
             CharSequence engines[] = new CharSequence[] {"Sign In"};
 
@@ -173,20 +322,28 @@ public class Background_Worker extends AsyncTask<String, Void, String> {
                         ((Activity)context).finish();
 
                     }
-
-
-
                 }
             });
             builder.show();
-        }
-        else {
-            //CharSequence engines[] = new CharSequence[] {"Sign In"};
 
+            mDialog.dismiss();
+        }
+        else if(result.equals("Processing")){
+            Toast.makeText(context, "Processing", Toast.LENGTH_SHORT).show();
+            mDialog.dismiss();
+        }
+        else if(result.equals("Gotid")){
+            Toast.makeText(context, "Getting Id", Toast.LENGTH_SHORT).show();
+            mDialog.dismiss();
+        }
+        else
+            {
             final AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle("Something went wrong");
             builder.show();
+            mDialog.dismiss();
         }
+
     }
 
     @Override

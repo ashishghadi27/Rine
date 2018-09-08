@@ -37,13 +37,12 @@ import java.util.List;
 
 public class Products_Activity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
-    String jsonurl = "https://rinebars.com/wp-json/wp/v2/product?per_page=30";
+    String jsonurl = "https://www.rinebars.com/wp-json/wc/v2/products?consumer_key=ck_143511d1b1fd59f4db330333f1242abf956cbb3c&consumer_secret=cs_bc0d231f97f70c3bb8d20c3ebe919be96b5b0d7c&per_page=30";
     private RecyclerView recyclerView;
     private List<Products_list> listItems;
     private Products_adapter adapter;
     String TAG = "Check ADAPTER", id;
     SwipeRefreshLayout mSwipeRefresh;
-    private String img;
     private Navi_drawer navi_drawer;
     public String resp;
     private NavigationView navigationView;
@@ -54,10 +53,10 @@ public class Products_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products_);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.navi);
-        recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
+        mDrawerLayout = findViewById(R.id.navi);
+        recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mSwipeRefresh = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshLayout);
+        mSwipeRefresh = findViewById(R.id.swipeRefreshLayout);
         navigationView = findViewById(R.id.nav_view);
         navi_drawer = new Navi_drawer();
         navi_drawer.nav(mDrawerLayout, navigationView);
@@ -72,16 +71,18 @@ public class Products_Activity extends AppCompatActivity {
         fade.excludeTarget(R.id.lay,true);
 
 
-
-
-
-
-
         if(isNetworkAvailable()){
             loadRecyclerViewData();
 
         }
-        else Toast.makeText(Products_Activity.this, "Please Check Your Connection", Toast.LENGTH_SHORT).show();
+        else {
+            Toast.makeText(Products_Activity.this, "Please Check Your Connection", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Products_Activity.this, Rine_home.class);
+                startActivity(intent);
+                finish();
+
+
+        }
         mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -108,26 +109,6 @@ public class Products_Activity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("saved_products",MODE_PRIVATE);
         getting_products = preferences.getString("our_products","");
 
-        if(!getting_products.equals("")){
-            try {
-                JSONArray jsonArrayt = new JSONArray(getting_products);
-                for(int i=0; i<jsonArrayt.length();i++){
-                    JSONObject jsonObjectt = jsonArrayt.getJSONObject(i);
-                    Products_list item = new Products_list(jsonObjectt.getString("title"),jsonObjectt.getString("id"), jsonObjectt.getString("img"));
-                    listItems.add(item);
-                    adapter = new Products_adapter(listItems, getApplicationContext());
-                    recyclerView.setAdapter(adapter);
-
-
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-
-        else {
-
 
             final RequestQueue requestQueue = Volley.newRequestQueue(this);
             final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -152,50 +133,36 @@ public class Products_Activity extends AppCompatActivity {
                             try {
 
                                 JSONArray array = new JSONArray(response);
+                                String images[] = new String[4];
                                 for (int i = 0; i < array.length(); i++) {
                                     final JSONObject o = array.getJSONObject(i);
-                                    if (!((o.getJSONObject("title").getString("rendered")).contains("Subscription"))) {
+                                    if (!(o.getString("name").contains("Subscription"))) {
 
-                                        JSONArray x = o.getJSONObject("_links").getJSONArray("wp:featuredmedia");
-                                        JSONObject y = x.getJSONObject(0);
-                                        String newjsonurl = y.getString("href");
-                                        Log.v("URL IS", newjsonurl);
-                                        StringRequest stringRequest1 = new StringRequest(Request.Method.GET, newjsonurl, new Response.Listener<String>() {
-                                            @Override
-                                            public void onResponse(String response1) {
-                                                try {
-                                                    Log.v(TAG, "Here in STRING REQ block");
-                                                    JSONObject object = new JSONObject(response1);
-                                                    object = object.getJSONObject("guid");
-
-                                                    img = object.getString("rendered");
-                                                    Log.v("IMAGE CHECKER", img);
-                                                    Products_list item = new Products_list(o.getJSONObject("title").getString("rendered"), o.getString("id"), img);
-                                                    Log.v("IMAGE CHECKER OUTSIDE", img);
-                                                    listItems.add(item);
-                                                    progressDialog.dismiss();
-                                                    adapter = new Products_adapter(listItems, getApplicationContext());
-                                                    recyclerView.setAdapter(adapter);
-
-
-                                                } catch (JSONException e) {
-                                                    e.printStackTrace();
-                                                    Log.v("IMAGE CHECKER OUTSIDE", "Image exception");
-                                                }
+                                        Log.v("IMAGE ARRAY", o.getJSONArray("images").toString());
+                                        JSONArray jsonArray = o.getJSONArray("images");
+                                        Log.v("LENGTH OF ARRAY", Integer.toString(jsonArray.length()));
+                                        for( int j = 0; j < jsonArray.length(); j++){
+                                            JSONObject jsonObject = jsonArray.getJSONObject(j);
+                                            images[j] = jsonObject.getString("src");
+                                            Log.v("TEST IMAGES", images[j].toString());
+                                            if(!isNetworkAvailable() && i<array.length()){
+                                                Toast.makeText(Products_Activity.this, "Connection Failed", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(Products_Activity.this, Rine_home.class);
+                                                startActivity(intent);
 
                                             }
-                                        }, new Response.ErrorListener() {
-                                            @Override
-                                            public void onErrorResponse(VolleyError error) {
 
-                                            }
-                                        });
+                                        }
 
-                                        requestQueue.add(stringRequest1);
+                                        Products_list item = new Products_list(o.getString("name"), o.getString("id"), images[0], images[1], images[2], images[3], o.getString("short_description"), o.getString("sale_price"), o.getString("regular_price"));
 
-                                        Log.v(TAG, "Here in the for loop block");
-                                        Log.v(TAG, "THE ID IS " + o.getInt("id"));
+                                        listItems.add(item);
+                                        progressDialog.dismiss();
+                                        adapter = new Products_adapter(listItems, getApplicationContext());
+                                        recyclerView.setAdapter(adapter);
                                     }
+
+
 
                                 }
 
@@ -204,6 +171,17 @@ public class Products_Activity extends AppCompatActivity {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                                 Log.v(TAG, "Some json exception");
+                                loadRecyclerViewData();
+
+
+                            }
+                            catch (Exception e){
+                                if(!isNetworkAvailable()){
+                                    Toast.makeText(Products_Activity.this, "Connection Failed", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(Products_Activity.this, Rine_home.class);
+                                    startActivity(intent);
+
+                                }
                             }
 
 
@@ -221,13 +199,6 @@ public class Products_Activity extends AppCompatActivity {
 
         }
 
-
-
-
-
-
-
-    }
 
 
     public void drawerclick(View view){
@@ -258,6 +229,7 @@ public class Products_Activity extends AppCompatActivity {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
+
 
     @Override
     protected void onPause() {

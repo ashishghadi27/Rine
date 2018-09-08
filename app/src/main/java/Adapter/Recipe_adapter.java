@@ -1,17 +1,7 @@
 package Adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,11 +13,7 @@ import android.widget.TextView;
 import com.asg.ashish.rine.R;
 import com.asg.ashish.rine.loadl_link;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 
-import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import Interface.ItemClickListener;
@@ -54,11 +40,11 @@ public class Recipe_adapter extends RecyclerView.Adapter<Recipe_adapter.MyViewHo
 
         public MyViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.txtTitle);
-            date = (TextView)view.findViewById(R.id.publishdate);
-            img = (ImageView) view.findViewById(R.id.feedimage);
-            desc = (TextView) view.findViewById(R.id.txtcontent);
-            link = (TextView)view.findViewById(R.id.linktext);
+            title = view.findViewById(R.id.txtTitle);
+            date = view.findViewById(R.id.publishdate);
+            img = view.findViewById(R.id.feedimage);
+            desc = view.findViewById(R.id.txtcontent);
+            link = view.findViewById(R.id.linktext);
             context = view.getContext();
             view.setOnClickListener(this);
 
@@ -110,7 +96,7 @@ public class Recipe_adapter extends RecyclerView.Adapter<Recipe_adapter.MyViewHo
         info = info.replaceAll("\n","");
         info = info.replaceAll(";",".");
         holder.desc.setText(info);
-        Glide.with(context).load(list.getLink()).override(700,400).into(holder.img);
+        Glide.with(context).load(list.getLink()).placeholder(R.drawable.sampleprofile).override(700,400).into(holder.img);
 
     }
 

@@ -7,7 +7,7 @@
         android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/background_light"
+        android:background="#ffffff"
         android:orientation="vertical">
 
         <TextView
@@ -17,6 +17,7 @@
             android:layout_marginTop="15dp"
             android:text="@string/sign_up"
             android:textColor="#808080"
+            android:fontFamily="@font/montserrat"
             android:textSize="25sp"
             android:id="@+id/textView" />
 
@@ -30,7 +31,9 @@
             android:padding="5dp"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
+            android:fontFamily="@font/montserrat"
             android:background="@drawable/rounded_edittext"
+            android:singleLine="true"
             android:hint="First Name"/>
 
         <EditText
@@ -42,8 +45,10 @@
             android:layout_centerHorizontal="true"
             android:padding="5dp"
             android:layout_marginStart="40dp"
+            android:fontFamily="@font/montserrat"
             android:layout_marginEnd="40dp"
             android:background="@drawable/rounded_edittext"
+            android:singleLine="true"
             android:hint="Last Name"/>
 
         <EditText
@@ -56,8 +61,10 @@
             android:layout_marginEnd="40dp"
             android:layout_centerHorizontal="true"
             android:padding="5dp"
+            android:fontFamily="@font/montserrat"
             android:background="@drawable/rounded_edittext"
             android:hint="@string/email"
+            android:singleLine="true"
             android:inputType="textEmailAddress"/>
 
         <EditText
@@ -72,7 +79,9 @@
             android:padding="5dp"
             android:background="@drawable/rounded_edittext"
             android:hint="@string/password"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:fontFamily="@font/montserrat"/>
 
         <Button
             android:id="@+id/submitbutton"
@@ -92,6 +101,7 @@
             android:layout_marginTop="30dp"
             android:layout_centerHorizontal="true"
             android:onClick="OnReg"
+            android:fontFamily="@font/montserrat"
             />
 
         <TextView
@@ -124,6 +134,7 @@
             android:layout_below="@id/submitbutton"
             android:layout_marginTop="52dp"
             android:layout_centerHorizontal="true"
+            android:fontFamily="@font/montserrat"
             />
 
         <Button
@@ -169,6 +180,9 @@
             android:scaleY="1.5"
             android:layout_below="@id/rinesignin"
             android:layout_marginTop="20dp"
+            android:padding="5dp"
+            android:stateListAnimator="@null"
+            android:elevation="2dp"
             />
 
 
@@ -199,6 +213,7 @@
             android:layout_below="@id/facebook"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:elevation="0dp"
             />
         <Space
             android:layout_width="match_parent"

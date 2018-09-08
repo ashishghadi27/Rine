@@ -1,6 +1,8 @@
 package com.asg.ashish.rine;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -18,7 +20,21 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,15 +50,15 @@ public class Cart_Activity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<Cart_list> listItems;
     private Cart_Adapter adapter;
-    String TAG = "Check ADAPTER", id, data="";
+    String TAG = "Check ADAPTER", id, data="", cut_price_by, code, discount = "0.00";
     SwipeRefreshLayout mSwipeRefresh;
     int count = 0;
     private Navi_drawer navi_drawer;
     DBHandler dbHandler;
     private NavigationView navigationView;
-    private TextView total_set;
-    private SharedPreferences sharedPreferences;
-    int total_price = 0;
+    private TextView total_set, discount_set, applied_text, subtotal_price;
+    private SharedPreferences sharedPreferences, preferences;
+    int total_price = 0; float dis = 0;
     private Button checkout;
 
 
@@ -50,33 +66,48 @@ public class Cart_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart_);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.navi);
+        mDrawerLayout = findViewById(R.id.navi);
         navigationView = findViewById(R.id.nav_view);
         navi_drawer = new Navi_drawer();
         navi_drawer.nav(mDrawerLayout, navigationView);
-        recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mSwipeRefresh = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshLayout);
+        mSwipeRefresh = findViewById(R.id.swipeRefreshLayout);
         checkout = findViewById(R.id.checkout);
+        applied_text = findViewById(R.id.applied_text);
+        discount_set = findViewById(R.id.discount_price);
+        subtotal_price = findViewById(R.id.subtotal_price);
         listItems = new ArrayList<>();
         dbHandler = new DBHandler(this, null, null, 2);
         loader();
 
+        preferences = getSharedPreferences("discount",MODE_PRIVATE);
+        cut_price_by = preferences.getString("dis", "0");
+        dis = Float.parseFloat(cut_price_by);
+        dis = dis/100;
+
+        Log.v("THE DISCOUNT: ", String.valueOf(dis));
+
         total_set = findViewById(R.id.price_set);
-        total_set.setText(sharedPreferences.getString("tp","0"));
+        total_set.setText("\u20B9 " + sharedPreferences.getString("tp","0"));
+        subtotal_price.setText("\u20B9 " + sharedPreferences.getString("tp","0"));
         mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 listItems.clear();
                 loader();
                 total_set = findViewById(R.id.price_set);
-                total_set.setText(sharedPreferences.getString("tp","0"));
+
+                total_set.setText("\u20B9 " + sharedPreferences.getString("tp","0"));
+                subtotal_price.setText("\u20B9 " + sharedPreferences.getString("tp","0"));
+                updatetotal();
             }
         });
 
         sharedPreferences = getSharedPreferences("totalprice",MODE_PRIVATE);
         total_set = findViewById(R.id.price_set);
-        total_set.setText(sharedPreferences.getString("tp","0"));
+        total_set.setText("\u20B9 " + sharedPreferences.getString("tp","0"));
+        subtotal_price.setText("\u20B9 " + sharedPreferences.getString("tp","0"));
         calt();
 
 
@@ -84,6 +115,7 @@ public class Cart_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Cart_Activity.this, Checkout_details.class);
+                intent.putExtra("amount", total_set.getText().toString());
                 startActivity(intent);
             }
         });
@@ -121,13 +153,23 @@ public class Cart_Activity extends AppCompatActivity {
                     c.moveToNext();
                 }
 
+                String pinfocheckout = new Gson().toJson(listItems);
+                SharedPreferences sharedPreferences5 = getSharedPreferences("Checkout", MODE_PRIVATE);
+                SharedPreferences.Editor editor2 = sharedPreferences5.edit();
+                editor2.putString("pinfocheckout", pinfocheckout);
+                editor2.apply();
+
+
+
                 c.close();
 
 
             mSwipeRefresh.setRefreshing(false);
             sharedPreferences = getSharedPreferences("totalprice",MODE_PRIVATE);
             total_set = findViewById(R.id.price_set);
-            total_set.setText(sharedPreferences.getString("tp","0"));
+            total_set.setText("\u20B9 " + sharedPreferences.getString("tp","0"));
+            subtotal_price.setText("\u20B9 " + sharedPreferences.getString("tp","0"));
+            updatetotal();
 
             //Cart_Activity.this.recreate();
         }
@@ -155,20 +197,13 @@ public class Cart_Activity extends AppCompatActivity {
 
     public void remove(View view){
         TextView pid;
-        pid = (TextView)findViewById(R.id.counter);
+        pid = findViewById(R.id.counter);
         String idi = pid.getText().toString();
-        /*SharedPreferences sharedPreferences1 = getSharedPreferences("totalprice",MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences1.edit();
-        editor.putString("tp", "0");
-        editor.apply();
-        SharedPreferences sharedPreferences2 = getSharedPreferences("totalprice", MODE_PRIVATE);
-        String cp = sharedPreferences1.getString("tp", "0");
-        Log.v("UPDATED PRICE", cp);
-        total_set.setText(sharedPreferences2.getString("tp", "0"));*/
         Log.v("ID ISSSSSSSSSSSSSSSS :",idi);
         dbHandler.deleteProduct(idi);
         listItems.clear();
         loader();
+        updatetotal();
 
 
 
@@ -222,6 +257,146 @@ public class Cart_Activity extends AppCompatActivity {
         }
 
         c.close();
-        total_set.setText(String.valueOf(total_price));
+        total_set.setText("\u20B9 " + String.valueOf(total_price));
+        subtotal_price.setText("\u20B9 " + String.valueOf(total_price));
+        updatetotal();
+    }
+
+    public void applycoupon(View view){
+        android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(Cart_Activity.this);
+        alertDialog.setTitle("Enter Coupon Code");
+
+        // Setting Dialog Message
+       // alertDialog.setMessage("Enter Password");
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(50, 0, 30, 0);
+
+        final EditText textBox = new EditText(Cart_Activity.this);
+        layout.addView(textBox, params);
+
+        alertDialog.setView(layout);
+
+        // Setting Icon to Dialog
+        alertDialog.setIcon(R.drawable.splash);
+
+        // Setting Positive "Yes" Button
+        alertDialog.setPositiveButton("APPLY",
+                new android.content.DialogInterface.OnClickListener() {
+                    public void onClick(android.content.DialogInterface dialog,int which) {
+
+                        code = textBox.getText().toString();
+
+                        String jsonurl = "https://www.rinebars.com/wp-json/wc/v2/coupons?consumer_key=ck_143511d1b1fd59f4db330333f1242abf956cbb3c&consumer_secret=cs_bc0d231f97f70c3bb8d20c3ebe919be96b5b0d7c";
+                        final RequestQueue requestQueue = Volley.newRequestQueue(Cart_Activity.this);
+                        final ProgressDialog progressDialog = new ProgressDialog(Cart_Activity.this);
+                        progressDialog.setMessage("Applying Coupon");
+                        progressDialog.setCancelable(true);
+                        progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                            @Override
+                            public void onCancel(DialogInterface dialog) {
+                                onBackPressed();
+                            }
+                        });
+                        progressDialog.setCanceledOnTouchOutside(false);
+                        progressDialog.show();
+
+                        StringRequest stringRequest = new StringRequest(Request.Method.GET, jsonurl,
+                                new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        try {
+                                            int i;
+                                            JSONArray jsonArray = new JSONArray(response);
+                                            for(i=0; i < jsonArray.length(); i++){
+                                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                                if(jsonObject.getString("code").equals(code)){
+                                                    String setapplied = "(" + code + ")";
+                                                    discount = jsonObject.getString("amount");
+                                                    progressDialog.dismiss();
+                                                    android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(Cart_Activity.this);
+                                                    alertDialog.setTitle("Coupon Code Applied");
+                                                    String message = "Discount of " + discount + " % applied";
+                                                    alertDialog.setMessage(message);
+                                                    alertDialog.setIcon(R.drawable.splash);
+                                                    alertDialog.show();
+                                                    SharedPreferences sharedPreferences = getSharedPreferences("discount", MODE_PRIVATE);
+                                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                    editor.putString("dis", discount);
+                                                    editor.apply();
+                                                    String getp = total_set.getText().toString().replaceAll("\u20B9 ", "");
+                                                    int setdis = 0;
+                                                    if(Float.parseFloat(discount) > 0) {
+                                                        setdis = (int) (Integer.parseInt(getp) * (Float.parseFloat(discount) / 100));
+                                                    }
+                                                    discount_set.setText(String.valueOf("-" + "\u20B9 "+ setdis));
+                                                    if(Float.parseFloat(discount) > 0.00) {
+                                                        total_set.setText("\u20B9 " + String.valueOf(Integer.parseInt(getp) - (int) (Integer.parseInt(getp) * (Float.parseFloat(discount) / 100))));
+                                                    }
+                                                    else
+                                                        total_set.setText("\u20B9 " + String.valueOf(Integer.parseInt(getp)));
+                                                    String replace = applied_text.getText().toString();
+                                                    replace = replace.replaceAll("Applied", setapplied);
+                                                    applied_text.setText(replace);
+                                                    break;
+                                                }
+                                            }
+                                            if(i == jsonArray.length()){
+                                                progressDialog.dismiss();
+                                                android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(Cart_Activity.this);
+                                                alertDialog.setTitle("Invalid Coupon Code");
+                                                alertDialog.setMessage("Check your Coupon Code");
+                                                alertDialog.setIcon(R.drawable.splash);
+                                                alertDialog.show();
+
+                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                },
+                                new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                            }
+                        });
+
+                        requestQueue.add(stringRequest);
+
+                    }
+                });
+        // Setting Negative "NO" Button
+        alertDialog.setNegativeButton("CANCEL",
+                new android.content.DialogInterface.OnClickListener() {
+                    public void onClick(android.content.DialogInterface dialog, int which) {
+                        // Write your code here to execute after dialog
+                        dialog.cancel();
+                    }
+                });
+
+        // closed
+
+        // Showing Alert Message
+        alertDialog.show();
+    }
+
+    public void updatetotal(){
+        String setapplied = "(" + code + ")";
+        String getp = total_set.getText().toString().replaceAll("\u20B9 ", "");
+        int setdis = 0;
+        if(Float.parseFloat(discount) > 0) {
+            setdis = (int) (Integer.parseInt(getp) * (Float.parseFloat(discount) / 100));
+        }
+        discount_set.setText(String.valueOf("-" + "\u20B9 "+ setdis));
+        if(Float.parseFloat(discount) > 0.00) {
+            total_set.setText("\u20B9 " + String.valueOf(Integer.parseInt(getp) - (int) (Integer.parseInt(getp) * (Float.parseFloat(discount) / 100))));
+        }
+        else
+            total_set.setText("\u20B9 " + String.valueOf(Integer.parseInt(getp)));
+
+
     }
 }

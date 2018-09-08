@@ -4,7 +4,7 @@
         <item android:id="@+id/navProducts" android:title="Products" android:icon="@drawable/naviproducts" />
         <item android:id="@+id/plans" android:title="Plans" android:icon="@drawable/naviplans"/>
         <item android:id="@+id/profile" android:title="My Profile" android:icon="@drawable/naviprofile"/>
-        <item android:id="@+id/Noti" android:title="Notifications" android:icon="@drawable/navinoti"/>
+        <item android:id="@+id/orders" android:title="Orders" android:icon="@drawable/navinoti"/>
         <item android:id="@+id/navcart" android:title="My Cart" android:icon="@drawable/navicart"/>
         <item android:id="@+id/Calendar" android:title="Calendar" android:icon="@drawable/navicalendar"/>
         <item android:id="@+id/logout" android:title="Logout" android:icon="@drawable/navilogout"/>

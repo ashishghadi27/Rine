@@ -22,12 +22,14 @@
     <string name="peanut">Peanut Butter Crunch</string>
     <string name="mightychocolate">Mighty Chocolate</string>
     <string name="gram">50g</string>
-    <string name="rupee">\u20B9 60</string>
+    <string name="rupee">\u20B9</string>
     <string name="minus">-</string>
     <string name="plus">+</string>
     <string name="bmical">BMI Calculator</string>
     <string name="facebook_app_id">412022342575745</string>
     <string name="fb_login_protocol_scheme">fb412022342575745</string>
     <string name="info4">Strong bones, an active mind, and boundless energy – all packed in one delicious bar. For a child who wants to jump out of bed and is in a hurry to grow up fast; for adults who want to dig into something tasty, and never want to stop being children – this is YOUR bar. It packs as much flavour as a whole bowl of fruit, giving you the nutrition that you need while tasting like a scrumptious indulgence! This Rine Bar isn’t just a snack, it’s the bar that gives you the best kick-start to your day!</string>
+    <string name="leftarrow"><![CDATA[<]]></string>
+    <string name="rightarrow"><![CDATA[>]]></string>
 
 </resources>
