@@ -7,13 +7,13 @@ App Made for Nature Essential Foods PVT LTD
 App Features:
 
 See Products and select the quantity.
-Sign up for subscriptions
-Create your own subscription pack
-Calculate your BMI
-Workout Schedule
-Recipes which can be made using the Products
-Apply Coupons
-Checkout (PayUMoney)
-Monitor Your Profile
-Google Signup and Facebook Signup
-Check Your Orders
+Sign up for subscriptions.
+Create your own subscription pack.
+Calculate your BMI.
+Workout Schedule.
+Recipes which can be made using the Products.
+Apply Coupons.
+Checkout (PayUMoney).
+Monitor Your Profile.
+Google Signup and Facebook Signup.
+Check Your Orders.
